@@ -1,5 +1,6 @@
 const postsResolvers = require("./posts");
 const userResolvers = require("./users");
+const surveyResolvers = require("./surveys");
 const commentsResolvers = require("./comments");
 
 module.exports = {
@@ -11,11 +12,13 @@ module.exports = {
 	},
 	Query: {
 		...postsResolvers.Query,
+		...surveyResolvers.Query,
 	},
 	Mutation: {
 		...userResolvers.Mutation,
 		...postsResolvers.Mutation,
 		...commentsResolvers.Mutation,
+		...surveyResolvers.Mutation,
 	},
 	Subscription: {
 		//websockets in the background actively listening NEW_POST events
