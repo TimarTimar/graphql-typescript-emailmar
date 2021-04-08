@@ -5,6 +5,7 @@ const checkAuth = require("../../util/check-auth");
 module.exports = {
 	Query: {
 		async getSurveys() {
+			console.log("getSurveys");
 			try {
 				const surveys = await Survey.find().sort({ createdAt: -1 });
 				return surveys;
@@ -13,6 +14,7 @@ module.exports = {
 			}
 		},
 		async getSurvey(_, { surveyId }, context) {
+			console.log("getSurvey");
 			const { username } = checkAuth(context);
 			try {
 				const survey = await Survey.findById(surveyId);
@@ -27,6 +29,7 @@ module.exports = {
 		},
 		// only return the logged in users survey, return empty list if he/she dont have any
 		async getSurveysByUser(_, __, context) {
+			console.log("getSurveyByUser");
 			const me = checkAuth(context);
 			try {
 				const surveys = await Survey.find({ user: me.id });
@@ -44,6 +47,7 @@ module.exports = {
 			{ surveyInput: { title, subject, body, recipients } },
 			context
 		) {
+			console.log("createSurvey");
 			//get error if something missing, and cant move towards
 			const user = checkAuth(context);
 			console.log(user);
@@ -70,6 +74,7 @@ module.exports = {
 			return survey;
 		},
 		async deleteSurvey(_, { surveyId }, context) {
+			console.log("deleteSurvey");
 			try {
 				const { username } = checkAuth(context);
 
@@ -90,6 +95,7 @@ module.exports = {
 			{ surveyInput: { title, subject, body, recipients }, surveyId },
 			context
 		) {
+			console.log("editSurvey");
 			const user = checkAuth(context);
 
 			const formattedRecipients = recipients.split(",").map((recipient) => {

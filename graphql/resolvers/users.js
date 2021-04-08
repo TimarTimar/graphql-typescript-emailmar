@@ -25,12 +25,12 @@ module.exports = {
 	Mutation: {
 		async login(_, { username, password }) {
 			const { valid, errors } = validateLoginInput(username, password);
-
-			const res = await User.findOne({ username });
-
 			if (!valid) {
 				throw new UserInputError("Errors", { errors });
 			}
+
+			const res = await User.findOne({ username });
+
 			if (!res) {
 				errors.general = "User not found";
 				throw new UserInputError("User not found", { errors });
@@ -52,12 +52,10 @@ module.exports = {
 
 		async register(
 			_,
-			{ registerInput: { username, email, password, confirmPassword } },
-			context,
-			info
+			{ registerInput: { username, email, password, confirmPassword } }
 		) {
 			//TODO: Validate user data
-			const { errors, valid } = validateRegisterInput(
+			const { valid, errors } = validateRegisterInput(
 				username,
 				email,
 				password,
@@ -81,14 +79,12 @@ module.exports = {
 			//Hash password and create an auth token
 
 			password = await bcrypt.hash(password, 12);
-			const createdAt = new Date().toISOString();
-			console.log(createdAt, typeof createdAt);
 
 			const newUser = new User({
 				email,
 				username,
 				password,
-				createdAt,
+				createdAt: new Date().toISOString(),
 			});
 
 			const res = await newUser.save();
