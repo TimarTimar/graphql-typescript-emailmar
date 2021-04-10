@@ -11,11 +11,15 @@ const surveySchema = new Schema({
 		},
 	],
 	username: String,
+	state: { type: String, default: "draft" },
 	createdAt: String,
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: "users",
 	},
+	no: { type: Number, default: 0 },
+	yes: { type: Number, default: 0 },
+	dateSent: String,
 });
 
 module.exports = model("Survey", surveySchema);

@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Image, Button, Icon, Label } from "semantic-ui-react";
 import moment from "moment";
+import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
 import { Link } from "react-router-dom";
-
+import { AuthContext } from "../context/auth";
+import InvertedPopup from "../util/InvertedPopup";
 export default function PostCard({
 	post: { body, createdAt, id, username, likeCount, commentCount, likes },
 }) {
-	function likePost() {
-		console.log("Like Post");
-	}
+	const { user } = useContext(AuthContext);
 
-	function commentOnPost() {
-		console.log("Comment on Post");
-	}
 	return (
 		<Card fluid>
 			<Card.Content>
@@ -28,24 +26,19 @@ export default function PostCard({
 				<Card.Description>{body}</Card.Description>
 			</Card.Content>
 			<Card.Content extra>
-				<Button as="div" labelPosition="right" onClick={likePost}>
-					<Button color="teal" basic>
-						<Icon name="heart" />
-						Like
+				<LikeButton post={{ id, likes, likeCount }} user={user} />
+				<InvertedPopup content="Comment on post">
+					<Button labelPosition="right" as={Link} to={`/post/${id}`}>
+						<Button color="blue" basic>
+							<Icon name="comments" />
+							Comment
+						</Button>
+						<Label basic color="blue" pointing="left">
+							{commentCount}
+						</Label>
 					</Button>
-					<Label basic color="teal" pointing="left">
-						{likeCount}
-					</Label>
-				</Button>
-				<Button as="div" labelPosition="right" onClick={commentOnPost}>
-					<Button color="blue" basic>
-						<Icon name="comments" />
-						Comment
-					</Button>
-					<Label basic color="blue" pointing="left">
-						{commentCount}
-					</Label>
-				</Button>
+				</InvertedPopup>
+				{user && user.username === username && <DeleteButton postId={id} />}
 			</Card.Content>
 		</Card>
 	);

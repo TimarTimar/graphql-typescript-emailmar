@@ -6,9 +6,13 @@ module.exports = gql`
 		title: String!
 		subject: String!
 		body: String!
+		state: String!
 		recipients: [Recipient]
 		username: String!
 		createdAt: String!
+		dateSent: String
+		yes: Int!
+		no: Int!
 	}
 	type Recipient {
 		email: String!
@@ -68,7 +72,7 @@ module.exports = gql`
 
 		createPost(body: String!): Post!
 		deletePost(postId: ID!): String!
-		createComment(postId: String!, body: String!): Post!
+		createComment(postId: ID!, body: String!): Post!
 		deleteComment(postId: ID!, commentId: ID!): Post!
 		likePost(postId: ID!): Post!
 

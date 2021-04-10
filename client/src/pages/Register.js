@@ -4,7 +4,6 @@ import { Button, Form } from "semantic-ui-react";
 
 //Custom hook
 import { useForm } from "../util/hooks";
-import { AuthContext } from "../context/auth";
 
 export default function Register(props) {
 	const context = useContext(AudioContext);
@@ -17,7 +16,7 @@ export default function Register(props) {
 		confirmPassword: "",
 	});
 
-	const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER, {
+	const [registerUser, { loading }] = useMutation(REGISTER_USER, {
 		update(_, { data: { register: userData } }) {
 			context.login(userData);
 			props.history.push("/");

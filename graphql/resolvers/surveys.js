@@ -44,7 +44,7 @@ module.exports = {
 	Mutation: {
 		async createSurvey(
 			_,
-			{ surveyInput: { title, subject, body, recipients } },
+			{ surveyInput: { title, subject, body, recipients, state } },
 			context
 		) {
 			console.log("createSurvey");
@@ -65,8 +65,12 @@ module.exports = {
 				body,
 				recipients: formattedRecipients,
 				user: user.id,
+				state,
+				yes,
+				no,
 				username: user.username,
 				createdAt: new Date().toISOString(),
+				dateSent: new Date().toISOString(),
 			});
 
 			const survey = await newSurvey.save();
