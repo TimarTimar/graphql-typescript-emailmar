@@ -9,6 +9,7 @@ interface FormikFormSurveyProps {
 	initialValues: FormikSurveyFormValues;
 	onCancel: any;
 	formTitle: string;
+	showSaveAsDraftButton: boolean;
 }
 
 export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
@@ -21,7 +22,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 				onSubmit={props.handleSubmit}
 				validationSchema={SurveyFormSchema}
 			>
-				{({ errors, touched }) => (
+				{({ errors, touched, values }) => (
 					<Form>
 						{SurveyFormFieldsList.map((item) => {
 							return (
@@ -52,7 +53,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 							>
 								Cancel
 							</button>
-							{props.children}
+							{props.showSaveAsDraftButton && props.children}
 							<button
 								className={tw.button.white}
 								type="submit"

@@ -1,36 +1,18 @@
 import axios from "axios";
 import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router";
 import { tw } from "../../../TailwindClasses/Buttons";
 import { FormikSurveyForm } from "./FormikSurveyForm";
-import { sendSurvey } from "./surveyRoutes";
+import { saveAsDraft, sendSurvey } from "./surveyRoutes";
 import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
 
 interface FormikSurveyListItemEditProps {}
 
-interface FormikChildComponentProps {
-	saveAsDraft: (values: FormikSurveyFormValues) => void;
-}
+interface FormikChildComponentProps {}
 
-//For getting the props
-const FormikChildComponent = (props: FormikChildComponentProps) => {
-	const formik = useFormikContext<FormikSurveyFormValues>();
-	return (
-		<button
-			className={tw.button.white}
-			onClick={() => props.saveAsDraft(formik.values)}
-			type="button"
-		>
-			Save As Draft
-		</button>
-	);
-};
-
-export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> = (
-	props: any
-) => {
+export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> = ({}) => {
 	const [formikFormValues, setFormikFormValues] = useState({
 		title: "",
 		subject: "",
@@ -68,35 +50,38 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 		}
 	}, [data]);
 
-	/*useEffect(() => {
-		const main = async () => {
-			const { data }: FetchSurveyResponseData = await axios.get(
-				`/api/fetch_survey/${surveyId}`
-			);
-			const recipients = data.recipients
-				.map((item) => {
-					return item.email;
-				})
-				.toLocaleString();
-			const FormikInitialValues = {
-				title: data.title,
-				subject: data.subject,
-				body: data.body,
-				recipients,
-			};
-			setFormikFormValues(FormikInitialValues);
-			setIsLoading(false);
+	const FormikChildComponent = (props: FormikChildComponentProps) => {
+		const formik = useFormikContext<FormikSurveyFormValues>();
+		const [saveAsDraftSurvey, { error }] = useMutation(
+			SAVE_AS_DRAFT_SURVEY_MUTUTATION,
+			{
+				variables: {
+					surveyId,
+					body: formik.values.body,
+					title: formik.values.title,
+					subject: formik.values.subject,
+					recipients: formik.values.recipients,
+				},
+				onError(err) {
+					return err;
+				},
+			}
+		);
+		const wrapSaveAsDraftSurvey = async () => {
+			setIsLoading(true);
+			await saveAsDraftSurvey();
+			window.location.assign("/surveys");
 		};
-		main();
-	}, []);
-
-	const [formikFormValues, setFormikFormValues] = useState({
-		title: "",
-		subject: "",
-		body: "",
-		recipients: "",
-	});
-	*/
+		return (
+			<button
+				className={tw.button.white}
+				onClick={() => wrapSaveAsDraftSurvey()}
+				type="submit"
+			>
+				Save As Draft
+			</button>
+		);
+	};
 
 	if (isLoading === false) {
 		return (
@@ -111,22 +96,13 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 					sendSurvey(data, setIsLoading, surveyId);
 				}}
 				initialValues={formikFormValues}
+				showSaveAsDraftButton={true}
 			>
-				<FormikChildComponent
-					saveAsDraft={async (values) => {
-						setIsLoading(true);
-						await axios.patch(`/api/edit_survey/${surveyId}`, values);
-						window.location.assign("/surveys");
-					}}
-				/>
+				<FormikChildComponent />
 			</FormikSurveyForm>
 		);
 	} else {
-		return (
-			<div className="progress">
-				<div className="indeterminate"></div>
-			</div>
-		);
+		return <div>Loading.....</div>;
 	}
 };
 
@@ -140,6 +116,31 @@ const FETCH_SURVEY_QUERY = gql`
 			recipients {
 				email
 			}
+		}
+	}
+`;
+
+const SAVE_AS_DRAFT_SURVEY_MUTUTATION = gql`
+	mutation editSurvey(
+		$title: String!
+		$subject: String!
+		$body: String!
+		$recipients: String!
+		$surveyId: ID!
+	) {
+		editSurvey(
+			surveyInput: {
+				title: $title
+				subject: $subject
+				body: $body
+				recipients: $recipients
+			}
+			surveyId: $surveyId
+		) {
+			id
+			title
+			subject
+			body
 		}
 	}
 `;

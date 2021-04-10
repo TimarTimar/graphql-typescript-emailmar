@@ -105,6 +105,7 @@ export const FormikSurveyNew = () => {
 						setFormikFormValues(data);
 					}}
 					initialValues={formikFormValues}
+					showSaveAsDraftButton={false}
 				>
 					<FormikButtons />
 				</FormikSurveyForm>
