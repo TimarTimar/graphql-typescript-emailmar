@@ -6,7 +6,7 @@ import { AuthContext } from "../context/auth";
 import PostForm from "../components/PostForm";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
 
-export default function Home() {
+export default function Posts() {
 	const { user } = useContext(AuthContext);
 	const { loading, data } = useQuery(FETCH_POSTS_QUERY);
 

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 import NavBar from "./components/NavBar";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SinglePost from "./pages/SinglePost";
@@ -14,14 +13,17 @@ import { FormikSurveyNew } from "./components/surveys/formikForm/FormikSurveyNew
 import { FormikSurveyListItemEdit } from "./components/surveys/formikForm/FormikSurveyListItemEdit";
 import { FormikSurveyForm } from "./components/surveys/formikForm/FormikSurveyForm";
 import SurveysDashboard from "./components/SurveysDashboard";
+import Posts from "./pages/Posts";
+import Header from "./components/Header";
 
 function App() {
 	return (
 		<AuthProvider>
 			<div className="ui container">
 				<Router>
-					<NavBar />
-					<Route exact path="/" component={Home} />
+					<Header />
+					<Route exact path="/" component={Posts} />
+					<Route exact path="/posts" component={Posts} />
 					<AuthRoute exact path="/login" component={Login} />
 					<AuthRoute exact path="/register" component={Register} />
 					<Route exact path="/post/:postId" component={SinglePost} />

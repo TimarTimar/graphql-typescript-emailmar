@@ -46,6 +46,7 @@ module.exports = gql`
 		token: String!
 		username: String!
 		createdAt: String!
+		credits: Int!
 	}
 	input RegisterInput {
 		username: String!

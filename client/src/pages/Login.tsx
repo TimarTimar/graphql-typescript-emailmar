@@ -5,12 +5,16 @@ import { Button, Form } from "semantic-ui-react";
 //Custom hook
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
+import { Interface } from "node:readline";
 
-export default function Login(props) {
+export default function Login(props: any) {
 	const context = useContext(AuthContext);
-	const [errors, setErrors] = useState({});
+	const [errors, setErrors] = useState<UserInputInterface>({
+		password: "",
+		username: "",
+	});
 
-	const { onChange, onSubmit, values } = useForm(loginUserCallback, {
+	const { onChange, onSubmit, values }: any = useForm(loginUserCallback, {
 		username: "",
 		password: "",
 	});
@@ -20,7 +24,7 @@ export default function Login(props) {
 			context.login(userData);
 			props.history.push("/");
 		},
-		onError(err) {
+		onError(err: any) {
 			setErrors(err.graphQLErrors[0].extensions.errors);
 		},
 		variables: {
@@ -61,18 +65,51 @@ export default function Login(props) {
 					Login
 				</Button>
 			</Form>
-			{Object.keys(errors).length !== 0 && (
+			{/*Object.keys(errors).length !== 0 && (
 				<div className="ui error message">
 					<ul className="list">
 						{Object.values(errors).map((value) => {
-							console.log("uh,?", errors);
-							return <li key={value}>{value}</li>;
+							if (value !== "") {
+								console.log("uh,?", errors);
+								return <li key={value}>{value}</li>;
+							} else {
+								return null;
+							}
+						})}
+					</ul>
+				</div>
+					)*/}
+			{(errors.username || errors.password) && (
+				<div className="ui error message">
+					<ul className="list">
+						{Object.values(errors).map((value) => {
+							if (value !== "") {
+								console.log("uh,?", errors);
+								return <li key={value}>{value}</li>;
+							} else {
+								return null;
+							}
 						})}
 					</ul>
 				</div>
 			)}
 		</div>
 	);
+}
+export interface UserInterface {
+	id: string;
+	email: string;
+	username: string;
+	createdAt: string;
+	token: string;
+	credits: number;
+}
+
+export interface UserInputInterface {
+	username: string;
+	password: string;
+	confirmPassword?: string;
+	email?: string;
 }
 
 const LOGIN_USER = gql`
@@ -83,6 +120,7 @@ const LOGIN_USER = gql`
 			username
 			createdAt
 			token
+			credits
 		}
 	}
 `;
