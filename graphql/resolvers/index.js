@@ -11,6 +11,7 @@ module.exports = {
 		commentCount: (parent) => parent.comments.length,
 	},
 	Query: {
+		...userResolvers.Query,
 		...postsResolvers.Query,
 		...surveyResolvers.Query,
 	},

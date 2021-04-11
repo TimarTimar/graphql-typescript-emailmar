@@ -79,6 +79,7 @@ export const FormikSurveyNew = () => {
 						>
 							Cancel
 						</button>
+						<button>Save as draft</button>
 						<button
 							className={tw.button.white}
 							onClick={() => {

@@ -1,13 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 //import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth";
+import { gql, useQuery } from "@apollo/client";
 import Payments from "../util/Payments";
 //import { RootState } from "../reducers";
 
 const Header = () => {
 	//const auth = useSelector((state: RootState) => state.auth);
 	const { user, logout } = useContext<any>(AuthContext);
+	const { data } = useQuery(FETCH_ME_QUERY);
+	const credits = data?.me?.credits;
+	console.log(credits);
 	const [activeItem, setActiveItem] = useState("home");
 
 	const renderContent = () => {
@@ -39,7 +43,7 @@ const Header = () => {
 						<Payments />
 					</li>
 					<li key="3" className="pr-4 hover:text-green-200">
-						Credits: {user.credits}
+						Credits: {credits}
 					</li>
 					<li key="2" className="pr-4">
 						<button className="hover:text-green-200" onClick={logout}>
@@ -68,3 +72,11 @@ const Header = () => {
 };
 
 export default Header;
+
+export const FETCH_ME_QUERY = gql`
+	query {
+		me {
+			credits
+		}
+	}
+`;

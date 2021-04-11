@@ -1,5 +1,7 @@
 const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
+const keys = require("../../config/keys");
+const stripe = require("stripe")(keys.stripeSecretKey);
 const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
 
@@ -8,6 +10,8 @@ const {
 	validateLoginInput,
 } = require("../../util/validators");
 const { SECRET_KEY } = require("../../config/keys");
+const checkAuth = require("../../util/check-auth");
+const { findById } = require("../../models/User");
 
 function generateToken(user) {
 	return jwt.sign(
@@ -22,8 +26,27 @@ function generateToken(user) {
 }
 
 module.exports = {
+	Query: {
+		async me(_, __, context) {
+			console.log("me");
+			const user = checkAuth(context);
+			if (user) {
+				try {
+					const res = await User.findById(user.id);
+					if (res) {
+						return res;
+					} else {
+						throw new Error("user not found");
+					}
+				} catch (err) {
+					throw new Error(err);
+				}
+			}
+		},
+	},
 	Mutation: {
 		async login(_, { username, password }) {
+			console.log("login");
 			const { valid, errors } = validateLoginInput(username, password);
 			if (!valid) {
 				throw new UserInputError("Errors", { errors });
@@ -46,6 +69,7 @@ module.exports = {
 			return {
 				...res._doc,
 				id: res._id,
+				credits: res.credits,
 				token,
 			};
 		},
@@ -54,7 +78,8 @@ module.exports = {
 			_,
 			{ registerInput: { username, email, password, confirmPassword } }
 		) {
-			//TODO: Validate user data
+			console.log("register");
+			// Validate user data
 			const { valid, errors } = validateRegisterInput(
 				username,
 				email,
@@ -85,6 +110,7 @@ module.exports = {
 				username,
 				password,
 				createdAt: new Date().toISOString(),
+				credits: 0,
 			});
 
 			const res = await newUser.save();
@@ -94,8 +120,46 @@ module.exports = {
 			return {
 				...res._doc,
 				id: res._id,
+				credits: res.credits,
 				token,
 			};
+		},
+		async pay5usd(_, token, context) {
+			console.log("pay5usd");
+			const user = checkAuth(context);
+
+			const { credits } = await User.findById(user.id);
+			newCredits = credits + 5;
+
+			const myToken = Object.values(token);
+
+			if (user) {
+				console.log(token, 22);
+				const charge = await stripe.charges.create({
+					amount: 5000,
+					currency: "usd",
+					source: myToken[0],
+					description: "$5 for 5 credits",
+				});
+
+				const editedUser = {
+					credits: newCredits,
+				};
+
+				try {
+					const res = await User.findByIdAndUpdate(user.id, editedUser, {
+						new: true,
+					});
+					if (res) {
+						return res;
+					}
+					throw new UserInputError(
+						"Could not find this user with the given ID"
+					);
+				} catch (err) {
+					throw new Error(err);
+				}
+			}
 		},
 	},
 };

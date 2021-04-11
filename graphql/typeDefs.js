@@ -61,6 +61,7 @@ module.exports = gql`
 		recipients: String!
 	}
 	type Query {
+		me: User
 		getPosts: [Post]
 		getPost(postId: ID!): Post
 		getSurveys: [Survey]
@@ -80,6 +81,8 @@ module.exports = gql`
 		createSurvey(surveyInput: SurveyInput): Survey!
 		deleteSurvey(surveyId: ID!): String!
 		editSurvey(surveyInput: SurveyInput, surveyId: ID!): Survey
+
+		pay5usd(token: String!): User!
 	}
 	type Subscription {
 		newPost: Post!
