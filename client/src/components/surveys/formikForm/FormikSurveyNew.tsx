@@ -5,42 +5,7 @@ import React, { useState } from "react";
 import { tw } from "../../../TailwindClasses/Buttons";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { FormikSurveyFormValues, SurveyFormFieldsList } from "./types";
-
-const FormikButtons = () => {
-	const formik = useFormikContext();
-
-	const saveAsDraft = async (formValues: FormikSurveyFormValues | unknown) => {
-		await axios.post("/api/save_as_draft", formValues);
-		window.location.assign("/surveys");
-	};
-
-	/*React.useEffect(() => {
-		console.group("Formik State");
-		console.log("values", formik.values);
-		console.log("errors", formik.errors);
-		console.log("touched", formik.touched);
-		console.log("isSubmitting", formik.isSubmitting);
-		console.log("isValidating", formik.isValidating);
-		console.log("submitCount", formik.submitCount);
-		console.groupEnd();
-	}, [
-		formik.values,
-		formik.errors,
-		formik.touched,
-		formik.isSubmitting,
-		formik.isValidating,
-		formik.submitCount,
-	]);*/
-	return (
-		<button
-			className={tw.button.white}
-			onClick={() => saveAsDraft(formik.values)}
-			type="button"
-		>
-			Save As Draft
-		</button>
-	);
-};
+import { gql, useMutation } from "@apollo/client";
 
 export const FormikSurveyNew = () => {
 	const [showFormReview, setShowFormReview] = useState(false);
@@ -55,6 +20,10 @@ export const FormikSurveyNew = () => {
 		await axios.post("/api/surveys", values);
 		window.location.assign("/surveys");
 	};
+
+	const [createSurveyAsDraft, { data }] = useMutation(CREATE_SURVEY_MUTATUION, {
+		variables: formikFormValues,
+	});
 
 	const renderContent = () => {
 		if (showFormReview) {
@@ -79,7 +48,15 @@ export const FormikSurveyNew = () => {
 						>
 							Cancel
 						</button>
-						<button>Save as draft</button>
+						<button
+							onClick={async (e) => {
+								e.preventDefault();
+								await createSurveyAsDraft();
+								window.location.assign("/surveys");
+							}}
+						>
+							SAVEASDRAFT
+						</button>
 						<button
 							className={tw.button.white}
 							onClick={() => {
@@ -107,12 +84,36 @@ export const FormikSurveyNew = () => {
 					}}
 					initialValues={formikFormValues}
 					showSaveAsDraftButton={false}
-				>
-					<FormikButtons />
-				</FormikSurveyForm>
+				></FormikSurveyForm>
 			);
 		}
 	};
 
 	return <div>{renderContent()}</div>;
 };
+
+const CREATE_SURVEY_MUTATUION = gql`
+	mutation createSurvey(
+		$title: String!
+		$subject: String!
+		$body: String!
+		$recipients: String!
+	) {
+		createSurvey(
+			surveyInput: {
+				title: $title
+				subject: $subject
+				body: $body
+				recipients: $recipients
+			}
+		) {
+			id
+			title
+			subject
+			body
+			createdAt
+			yes
+			no
+		}
+	}
+`;
