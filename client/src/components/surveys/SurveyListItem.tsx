@@ -61,8 +61,8 @@ const SurveyListItem = ({
 					<span className="text-xl underline">{title}</span>
 					<p>{body}</p>
 					<p>
-						Sent on:{" "}
-						{createdAt ? new Date(createdAt).toLocaleDateString("ko-KR") : "-"}
+						Created At:{" "}
+						{createdAt ? new Date(createdAt).toLocaleDateString() : "-"}
 					</p>
 					<h5>
 						Yes: {yes} No: {no}
