@@ -6,6 +6,7 @@ import { Button, Form } from "semantic-ui-react";
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 import { Interface } from "node:readline";
+import { LOGIN_USER } from "../util/graphql";
 
 export default function Login(props: any) {
 	const context = useContext(AuthContext);
@@ -111,16 +112,3 @@ export interface UserInputInterface {
 	confirmPassword?: string;
 	email?: string;
 }
-
-const LOGIN_USER = gql`
-	mutation register($username: String!, $password: String!) {
-		login(username: $username, password: $password) {
-			id
-			email
-			username
-			createdAt
-			token
-			credits
-		}
-	}
-`;

@@ -4,6 +4,7 @@ import { Button, Form } from "semantic-ui-react";
 
 //Custom hook
 import { useForm } from "../util/hooks";
+import { REGISTER_USER } from "../util/graphql";
 
 export default function Register(props) {
 	const context = useContext(AudioContext);
@@ -94,28 +95,3 @@ export default function Register(props) {
 		</div>
 	);
 }
-
-const REGISTER_USER = gql`
-	mutation register(
-		$username: String!
-		$email: String!
-		$password: String!
-		$confirmPassword: String!
-	) {
-		register(
-			registerInput: {
-				username: $username
-				email: $email
-				password: $password
-				confirmPassword: $confirmPassword
-			}
-		) {
-			id
-			email
-			username
-			createdAt
-			token
-			credits
-		}
-	}
-`;

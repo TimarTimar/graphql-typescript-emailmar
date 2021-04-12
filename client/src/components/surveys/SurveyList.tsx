@@ -5,6 +5,10 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import SurveyListItem from "./SurveyListItem";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { SurveyInterface } from "./types";
+import {
+	FETCH_SURVEYSBYUSER_QUERY,
+	DELETE_SURVEY_MUTATION,
+} from "../../util/graphql";
 //import { tw } from "../../TailwindClasses/Buttons";
 
 const SurveyList = () => {
@@ -134,25 +138,3 @@ const SurveyList = () => {
 };
 
 export default SurveyList;
-
-const FETCH_SURVEYSBYUSER_QUERY = gql`
-	query getSurveysByUser {
-		getSurveysByUser {
-			id
-			title
-			subject
-			body
-			state
-			yes
-			no
-			dateSent
-			createdAt
-		}
-	}
-`;
-
-const DELETE_SURVEY_MUTATION = gql`
-	mutation deleteSurvey($surveyId: ID!) {
-		deleteSurvey(surveyId: $surveyId)
-	}
-`;

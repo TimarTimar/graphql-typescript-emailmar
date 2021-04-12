@@ -6,6 +6,10 @@ import { tw } from "../../../TailwindClasses/Buttons";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { FormikSurveyFormValues, SurveyFormFieldsList } from "./types";
 import { gql, useMutation } from "@apollo/client";
+import {
+	CREATE_SURVEY_AND_SEND_MUTATUION,
+	CREATE_SURVEY_MUTATUION,
+} from "../../../util/graphql";
 
 export const FormikSurveyNew = () => {
 	const [showFormReview, setShowFormReview] = useState(false);
@@ -100,49 +104,3 @@ export const FormikSurveyNew = () => {
 
 	return <div>{renderContent()}</div>;
 };
-
-const CREATE_SURVEY_MUTATUION = gql`
-	mutation createSurvey(
-		$title: String!
-		$subject: String!
-		$body: String!
-		$recipients: String!
-	) {
-		createSurvey(
-			surveyInput: {
-				title: $title
-				subject: $subject
-				body: $body
-				recipients: $recipients
-			}
-		) {
-			id
-			title
-			subject
-			body
-			createdAt
-			yes
-			no
-		}
-	}
-`;
-
-const CREATE_SURVEY_AND_SEND_MUTATUION = gql`
-	mutation createSurveyAndSend(
-		$title: String!
-		$subject: String!
-		$body: String!
-		$recipients: String!
-	) {
-		createSurveyAndSend(
-			surveyInput: {
-				title: $title
-				subject: $subject
-				body: $body
-				recipients: $recipients
-			}
-		) {
-			id
-		}
-	}
-`;

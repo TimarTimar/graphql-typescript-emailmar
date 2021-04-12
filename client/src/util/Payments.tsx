@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { tw } from "../TailwindClasses/Buttons";
 import { AuthContext } from "../context/auth";
+import { PAY_5_USD_MUTATION } from "./graphql";
 
 const Payments = (props: any) => {
 	/*const handleToken = async (token: any) => {
@@ -42,14 +43,5 @@ const Payments = (props: any) => {
 		</StripeCheckout>
 	);
 };
-
-const PAY_5_USD_MUTATION = gql`
-	mutation pay5usd($token: String!) {
-		pay5usd(token: $token) {
-			id
-			credits
-		}
-	}
-`;
 
 export default Payments;

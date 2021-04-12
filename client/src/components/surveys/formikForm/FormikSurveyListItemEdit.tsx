@@ -6,6 +6,11 @@ import { useParams } from "react-router";
 import { tw } from "../../../TailwindClasses/Buttons";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { saveAsDraft, sendSurvey } from "./surveyRoutes";
+import {
+	EDIT_SURVEY_AND_SEND_MUTATION,
+	FETCH_SURVEY_QUERY,
+	SAVE_AS_DRAFT_SURVEY_MUTUTATION,
+} from "../../../util/graphql";
 import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
 
 interface FormikSurveyListItemEditProps {}
@@ -122,70 +127,3 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 		return <div>Loading.....</div>;
 	}
 };
-
-const FETCH_SURVEY_QUERY = gql`
-	query getSurvey($surveyId: ID!) {
-		getSurvey(surveyId: $surveyId) {
-			id
-			title
-			subject
-			body
-			recipients {
-				email
-			}
-		}
-	}
-`;
-
-const SAVE_AS_DRAFT_SURVEY_MUTUTATION = gql`
-	mutation editSurvey(
-		$title: String!
-		$subject: String!
-		$body: String!
-		$recipients: String!
-		$surveyId: ID!
-	) {
-		editSurvey(
-			surveyInput: {
-				title: $title
-				subject: $subject
-				body: $body
-				recipients: $recipients
-			}
-			surveyId: $surveyId
-		) {
-			id
-			title
-			subject
-			body
-		}
-	}
-`;
-
-const EDIT_SURVEY_AND_SEND_MUTATION = gql`
-	mutation editSurveyAndSend(
-		$title: String!
-		$subject: String!
-		$body: String!
-		$recipients: String!
-		$surveyId: ID!
-	) {
-		editSurveyAndSend(
-			surveyInput: {
-				title: $title
-				subject: $subject
-				body: $body
-				recipients: $recipients
-			}
-			surveyId: $surveyId
-		) {
-			id
-			title
-			subject
-			body
-			state
-			dateSent
-			createdAt
-		}
-	}
-`;

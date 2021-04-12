@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Button, Icon, Confirm } from "semantic-ui-react";
 import InvertedPopup from "../util/InvertedPopup";
-import { FETCH_POSTS_QUERY } from "../util/graphql";
+import {
+	FETCH_POSTS_QUERY,
+	DELETE_COMMENT_MUTATION,
+	DELETE_POST_MUTATION,
+} from "../util/graphql";
 
 export default function DeleteButton({ postId, commentId, callback }) {
 	const [confirmOpen, setConfirmOpen] = useState(false);
@@ -53,24 +57,3 @@ export default function DeleteButton({ postId, commentId, callback }) {
 		</InvertedPopup>
 	);
 }
-
-const DELETE_POST_MUTATION = gql`
-	mutation deletePost($postId: ID!) {
-		deletePost(postId: $postId)
-	}
-`;
-
-const DELETE_COMMENT_MUTATION = gql`
-	mutation deleteComment($postId: ID!, $commentId: ID!) {
-		deleteComment(postId: $postId, commentId: $commentId) {
-			id
-			comments {
-				id
-				username
-				body
-				createdAt
-			}
-			commentCount
-		}
-	}
-`;

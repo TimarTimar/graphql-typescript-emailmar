@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth";
 import { gql, useQuery } from "@apollo/client";
 import Payments from "../util/Payments";
+import { FETCH_ME_QUERY } from "../util/graphql";
 //import { RootState } from "../reducers";
 
 const Header = () => {
@@ -72,11 +73,3 @@ const Header = () => {
 };
 
 export default Header;
-
-export const FETCH_ME_QUERY = gql`
-	query {
-		me {
-			credits
-		}
-	}
-`;

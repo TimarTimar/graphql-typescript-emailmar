@@ -4,6 +4,7 @@ import { gql, useMutation } from "@apollo/client";
 import { SurveyInterface } from "./types";
 import { tw } from "../../TailwindClasses/Buttons";
 import { FaEnvelopeOpen, FaEnvelope } from "react-icons/fa";
+import { QUICK_SEND_SURVEY_MUTATION } from "../../util/graphql";
 
 export interface SurveyWithModalAndFilter extends SurveyInterface {
 	showModal: (id: string) => void;
@@ -91,19 +92,3 @@ const SurveyListItem = ({
 };
 
 export default SurveyListItem;
-
-const QUICK_SEND_SURVEY_MUTATION = gql`
-	mutation quickSendSurvey($surveyId: ID!) {
-		quickSendSurvey(surveyId: $surveyId) {
-			id
-			subject
-			body
-			title
-			createdAt
-			state
-			dateSent
-			yes
-			no
-		}
-	}
-`;

@@ -14,6 +14,7 @@ import moment from "moment";
 import LikeButton from "../components/LikeButton";
 import { AuthContext } from "../context/auth";
 import DeleteButton from "../components/DeleteButton";
+import { FETCH_POST_QUERY, SUBMIT_COMMENT_MUTATION } from "../util/graphql";
 
 export default function SinglePost(props) {
 	const { user } = useContext(AuthContext);
@@ -143,40 +144,3 @@ export default function SinglePost(props) {
 
 	return postMarkup;
 }
-
-const FETCH_POST_QUERY = gql`
-	query($postId: ID!) {
-		getPost(postId: $postId) {
-			id
-			body
-			createdAt
-			username
-			likeCount
-			likes {
-				username
-			}
-			commentCount
-			comments {
-				id
-				username
-				createdAt
-				body
-			}
-		}
-	}
-`;
-
-const SUBMIT_COMMENT_MUTATION = gql`
-	mutation($postId: ID!, $body: String!) {
-		createComment(postId: $postId, body: $body) {
-			id
-			comments {
-				id
-				body
-				createdAt
-				username
-			}
-			commentCount
-		}
-	}
-`;
