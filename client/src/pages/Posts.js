@@ -25,7 +25,7 @@ export default function Posts() {
 				) : (
 					posts &&
 					posts.map((post) => (
-						<Transition.Group>
+						<Transition.Group key={post.id}>
 							{
 								<Grid.Column key={post.id} stye={{ marginBottom: 20 }}>
 									<PostCard post={post} />

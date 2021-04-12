@@ -23,7 +23,9 @@ export default function Register(props) {
 			props.history.push("/");
 		},
 		onError(err) {
-			setErrors(err.graphQLErrors[0].extensions.errors);
+			setErrors(
+				err.graphQLErrors[0] ? err.graphQLErrors[0].extensions.errors : {}
+			);
 		},
 		variables: {
 			username: values.username,
@@ -31,7 +33,6 @@ export default function Register(props) {
 			password: values.password,
 			confirmPassword: values.confirmPassword,
 		},
-		errorPolicy: "none",
 	});
 
 	function registerUserCallback() {
@@ -48,7 +49,7 @@ export default function Register(props) {
 					name="username"
 					value={values.username}
 					onChange={onChange}
-					error={errors.username ? true : false}
+					error={errors?.username ? true : false}
 				/>
 				<Form.Input
 					label="Email"
@@ -57,7 +58,7 @@ export default function Register(props) {
 					name="email"
 					value={values.email}
 					onChange={onChange}
-					error={errors.email ? true : false}
+					error={errors?.email ? true : false}
 				/>
 				<Form.Input
 					label="Password"
@@ -66,7 +67,7 @@ export default function Register(props) {
 					name="password"
 					value={values.password}
 					onChange={onChange}
-					error={errors.password ? true : false}
+					error={errors?.password ? true : false}
 				/>
 
 				<Form.Input
@@ -76,7 +77,7 @@ export default function Register(props) {
 					name="confirmPassword"
 					value={values.confirmPassword}
 					onChange={onChange}
-					error={errors.confirmPassword ? true : false}
+					error={errors?.confirmPassword ? true : false}
 				/>
 				<Button type="submit" primary>
 					Register
