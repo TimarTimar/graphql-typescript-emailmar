@@ -82,6 +82,7 @@ module.exports = gql`
 		createSurveyAndSend(surveyInput: SurveyInput): User!
 		deleteSurvey(surveyId: ID!): String!
 		editSurvey(surveyInput: SurveyInput, surveyId: ID!): Survey
+		editSurveyAndSend(surveyInput: SurveyInput, surveyId: ID!): Survey
 		quickSendSurvey(surveyId: ID!): Survey!
 
 		pay5usd(token: String!): User!

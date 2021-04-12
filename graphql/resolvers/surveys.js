@@ -203,21 +203,6 @@ module.exports = {
 			} else {
 				return;
 			}
-
-			try {
-				const userResponse = await User.findById(user.id);
-				if (userResponse.credits < 1) {
-					throw new UserInputError("Not enough credits for this action");
-				}
-				userResponse.credits -= 1;
-
-				await mailer.send();
-				await newSurvey.save();
-				const updatedUser = await userResponse.save();
-				return updatedUser;
-			} catch (err) {
-				throw new Error(err);
-			}
 		},
 	},
 };
