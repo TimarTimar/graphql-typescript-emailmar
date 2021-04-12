@@ -28,7 +28,7 @@ export interface ModalProps {
 	open: boolean;
 	children: ReactNode;
 	onClose: MouseEventHandler<HTMLButtonElement>;
-	handleConfirm: string;
+	handleConfirm: () => void;
 }
 
 export default function Modal({
@@ -47,9 +47,9 @@ export default function Modal({
 					<button className={tw.button.white} onClick={onClose}>
 						Cancel
 					</button>
-					<a className={tw.button.white} href={handleConfirm}>
+					<button className={tw.button.white} onClick={handleConfirm}>
 						Confirm
-					</a>
+					</button>
 				</div>
 			</div>
 		</>,

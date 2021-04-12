@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal";
 
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import SurveyListItem from "./SurveyListItem";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { SurveyInterface } from "./types";
@@ -26,6 +26,12 @@ const SurveyList = () => {
 
 	const { getSurveysByUser: surveys }: { getSurveysByUser: SurveyInterface[] } =
 		data || [];
+
+	const [deleteSurvey, {}] = useMutation(DELETE_SURVEY_MUTATION, {
+		variables: {
+			surveyId: selectedSurvey,
+		},
+	});
 
 	useEffect(() => {}, []);
 
@@ -113,7 +119,11 @@ const SurveyList = () => {
 			<Modal
 				open={isOpen}
 				onClose={hideModal}
-				handleConfirm={`/api/delete_survey/${selectedSurvey}`}
+				handleConfirm={async () => {
+					console.log(selectedSurvey);
+					await deleteSurvey();
+					window.location.assign("/surveys");
+				}}
 			>
 				<h1>Delete Survey</h1>
 				<p>Are you sure you want to delete this survey?</p>
@@ -138,5 +148,11 @@ const FETCH_SURVEYSBYUSER_QUERY = gql`
 			dateSent
 			createdAt
 		}
+	}
+`;
+
+const DELETE_SURVEY_MUTATION = gql`
+	mutation deleteSurvey($surveyId: ID!) {
+		deleteSurvey(surveyId: $surveyId)
 	}
 `;
