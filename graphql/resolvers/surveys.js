@@ -204,5 +204,54 @@ module.exports = {
 				return;
 			}
 		},
+		async editSurveyAndSend(
+			_,
+			{ surveyInput: { title, subject, body, recipients }, surveyId },
+			context
+		) {
+			console.log("editSurveyAndSend");
+			const user = checkAuth(context);
+
+			const formattedRecipients = recipients.split(",").map((recipient) => {
+				return {
+					email: recipient,
+					responded: false,
+				};
+			});
+
+			const editedSurvey = {
+				title,
+				subject,
+				body,
+				sent: "sent",
+				recipients: formattedRecipients,
+				dateSent: new Date().toISOString(),
+			};
+
+			const responseUser = await User.findById(user.id);
+			const responseSurvey = await Survey.findByIdAndUpdate(
+				surveyId,
+				editedSurvey,
+				{
+					new: true,
+				}
+			);
+			//attempt to send
+			const mailer = new Mailer(responseSurvey, surveyTemplate(responseSurvey));
+
+			if (responseUser && responseUser.credits > 0 && responseSurvey) {
+				try {
+					await mailer.send();
+					responseUser.credits -= 1;
+					await responseUser.save();
+					return responseSurvey;
+				} catch (err) {
+					throw new Error(err);
+				}
+			} else
+				(err) => {
+					throw new new Error(err)();
+				};
+		},
 	},
 };

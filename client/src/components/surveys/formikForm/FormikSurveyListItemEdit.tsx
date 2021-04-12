@@ -50,6 +50,23 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 		}
 	}, [data]);
 
+	const [editSurveyAndSend] = useMutation(EDIT_SURVEY_AND_SEND_MUTATION, {
+		variables: {
+			surveyId,
+			body: formikFormValues.body,
+			title: formikFormValues.title,
+			subject: formikFormValues.subject,
+			recipients: formikFormValues.recipients,
+		},
+	});
+
+	async function wrapEditSurveyAndSend(data: FormikSurveyFormValues) {
+		setFormikFormValues(data);
+		setIsLoading(true);
+		await editSurveyAndSend();
+		window.location.assign("/surveys");
+	}
+
 	const FormikChildComponent = (props: FormikChildComponentProps) => {
 		const formik = useFormikContext<FormikSurveyFormValues>();
 		const [saveAsDraftSurvey, { error }] = useMutation(
@@ -93,7 +110,7 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 					window.location.assign("/surveys");
 				}}
 				handleSubmit={(data: FormikSurveyFormValues) => {
-					sendSurvey(data, setIsLoading, surveyId);
+					wrapEditSurveyAndSend(data);
 				}}
 				initialValues={formikFormValues}
 				showSaveAsDraftButton={true}
@@ -141,6 +158,34 @@ const SAVE_AS_DRAFT_SURVEY_MUTUTATION = gql`
 			title
 			subject
 			body
+		}
+	}
+`;
+
+const EDIT_SURVEY_AND_SEND_MUTATION = gql`
+	mutation editSurveyAndSend(
+		$title: String!
+		$subject: String!
+		$body: String!
+		$recipients: String!
+		$surveyId: ID!
+	) {
+		editSurveyAndSend(
+			surveyInput: {
+				title: $title
+				subject: $subject
+				body: $body
+				recipients: $recipients
+			}
+			surveyId: $surveyId
+		) {
+			id
+			title
+			subject
+			body
+			state
+			dateSent
+			createdAt
 		}
 	}
 `;
