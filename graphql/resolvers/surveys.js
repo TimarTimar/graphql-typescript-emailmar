@@ -1,7 +1,9 @@
 const { UserInputError } = require("apollo-server-errors");
 const Survey = require("../../models/Survey");
+const User = require("../../models/User");
 const checkAuth = require("../../util/check-auth");
-
+const Mailer = require("../../services/Mailer");
+const surveyTemplate = require("../../services/emailTemplates/surveyTemplate");
 module.exports = {
 	Query: {
 		async getSurveys() {
@@ -44,13 +46,12 @@ module.exports = {
 	Mutation: {
 		async createSurvey(
 			_,
-			{ surveyInput: { title, subject, body, recipients, state } },
+			{ surveyInput: { title, subject, body, recipients } },
 			context
 		) {
 			console.log("createSurvey");
 			//get error if something missing, and cant move towards
 			const user = checkAuth(context);
-			console.log(user);
 
 			const formattedRecipients = recipients.split(",").map((recipient) => {
 				return {
@@ -73,6 +74,52 @@ module.exports = {
 			const survey = await newSurvey.save();
 
 			return survey;
+		},
+		async createSurveyAndSend(
+			_,
+			{ surveyInput: { title, subject, body, recipients } },
+			context
+		) {
+			console.log("createSurveyAndSend");
+			//get error if something missing, and cant move towards
+			const user = checkAuth(context);
+
+			const formattedRecipients = recipients.split(",").map((recipient) => {
+				return {
+					email: recipient,
+					responded: false,
+				};
+			});
+
+			const newSurvey = new Survey({
+				title,
+				subject,
+				body,
+				recipients: formattedRecipients,
+				state: "sent",
+				user: user.id,
+				username: user.username,
+				createdAt: new Date().toISOString(),
+				dateSent: new Date().toISOString(),
+			});
+
+			//attempt to send
+			const mailer = new Mailer(newSurvey, surveyTemplate(newSurvey));
+
+			try {
+				const userResponse = await User.findById(user.id);
+				if (userResponse.credits < 1) {
+					throw new UserInputError("Not enough credits for this action");
+				}
+				userResponse.credits -= 1;
+
+				await mailer.send();
+				await newSurvey.save();
+				const updatedUser = await userResponse.save();
+				return updatedUser;
+			} catch (err) {
+				throw new Error(err);
+			}
 		},
 		async deleteSurvey(_, { surveyId }, context) {
 			console.log("deleteSurvey");

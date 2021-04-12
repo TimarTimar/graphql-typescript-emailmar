@@ -25,6 +25,13 @@ export const FormikSurveyNew = () => {
 		variables: formikFormValues,
 	});
 
+	const [createSurveyAndSend, {}] = useMutation(
+		CREATE_SURVEY_AND_SEND_MUTATUION,
+		{
+			variables: formikFormValues,
+		}
+	);
+
 	const renderContent = () => {
 		if (showFormReview) {
 			return (
@@ -59,9 +66,11 @@ export const FormikSurveyNew = () => {
 						</button>
 						<button
 							className={tw.button.white}
-							onClick={() => {
-								console.log(formikFormValues);
-								sendSurvey(formikFormValues);
+							onClick={async (e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								await createSurveyAndSend();
+								window.location.assign("/surveys");
 							}}
 						>
 							Send
@@ -114,6 +123,26 @@ const CREATE_SURVEY_MUTATUION = gql`
 			createdAt
 			yes
 			no
+		}
+	}
+`;
+
+const CREATE_SURVEY_AND_SEND_MUTATUION = gql`
+	mutation createSurveyAndSend(
+		$title: String!
+		$subject: String!
+		$body: String!
+		$recipients: String!
+	) {
+		createSurveyAndSend(
+			surveyInput: {
+				title: $title
+				subject: $subject
+				body: $body
+				recipients: $recipients
+			}
+		) {
+			id
 		}
 	}
 `;

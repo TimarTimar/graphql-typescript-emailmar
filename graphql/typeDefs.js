@@ -79,6 +79,7 @@ module.exports = gql`
 		likePost(postId: ID!): Post!
 
 		createSurvey(surveyInput: SurveyInput): Survey!
+		createSurveyAndSend(surveyInput: SurveyInput): User!
 		deleteSurvey(surveyId: ID!): String!
 		editSurvey(surveyInput: SurveyInput, surveyId: ID!): Survey
 
