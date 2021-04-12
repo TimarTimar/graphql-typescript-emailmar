@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { gql, useMutation } from "@apollo/client";
 import { SurveyInterface } from "./types";
 import { tw } from "../../TailwindClasses/Buttons";
 import { FaEnvelopeOpen, FaEnvelope } from "react-icons/fa";
@@ -20,16 +21,21 @@ const SurveyListItem = ({
 	no,
 	showModal,
 }: SurveyWithModalAndFilter) => {
+	const [quickSendSurvey, { data }] = useMutation(QUICK_SEND_SURVEY_MUTATION, {
+		variables: {
+			surveyId: id,
+		},
+	});
 	const conditionalDraftRendering = (_id: string, state: "sent" | "draft") => {
 		return {
 			renderSendButton:
 				state === "draft" ? (
-					<a
+					<button
 						className={tw.button.white.toString().concat(" p-2 mx-1.5")}
-						href={`/api/quick_send_survey/${_id}`}
+						onClick={() => quickSendSurvey()}
 					>
 						Quick Send
-					</a>
+					</button>
 				) : null,
 			renderEditButton:
 				state === "draft" ? (
@@ -85,3 +91,19 @@ const SurveyListItem = ({
 };
 
 export default SurveyListItem;
+
+const QUICK_SEND_SURVEY_MUTATION = gql`
+	mutation quickSendSurvey($surveyId: ID!) {
+		quickSendSurvey(surveyId: $surveyId) {
+			id
+			subject
+			body
+			title
+			createdAt
+			state
+			dateSent
+			yes
+			no
+		}
+	}
+`;

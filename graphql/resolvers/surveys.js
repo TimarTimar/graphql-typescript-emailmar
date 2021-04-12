@@ -4,6 +4,7 @@ const User = require("../../models/User");
 const checkAuth = require("../../util/check-auth");
 const Mailer = require("../../services/Mailer");
 const surveyTemplate = require("../../services/emailTemplates/surveyTemplate");
+const { response } = require("express");
 module.exports = {
 	Query: {
 		async getSurveys() {
@@ -170,6 +171,50 @@ module.exports = {
 				throw new UserInputError(
 					"Could not find this survey with the given ID"
 				);
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
+		async quickSendSurvey(_, { surveyId }, context) {
+			console.log("quickSendSurvey");
+			//get error if something missing, and cant move towards
+			const user = checkAuth(context);
+			const filter = { _id: surveyId };
+			const update = { state: "sent", dateSent: new Date().toISOString() };
+
+			const responseSurvey = await Survey.findOneAndUpdate(filter, update);
+
+			const responseUser = await User.findById(user.id);
+
+			if (responseUser && responseUser.credits > 0 && response) {
+				//attempt to send
+				const mailer = new Mailer(
+					responseSurvey,
+					surveyTemplate(responseSurvey)
+				);
+				try {
+					await mailer.send();
+					responseUser.credits -= 1;
+					await responseUser.save();
+					return responseSurvey;
+				} catch (err) {
+					throw new Error(err);
+				}
+			} else {
+				return;
+			}
+
+			try {
+				const userResponse = await User.findById(user.id);
+				if (userResponse.credits < 1) {
+					throw new UserInputError("Not enough credits for this action");
+				}
+				userResponse.credits -= 1;
+
+				await mailer.send();
+				await newSurvey.save();
+				const updatedUser = await userResponse.save();
+				return updatedUser;
 			} catch (err) {
 				throw new Error(err);
 			}
