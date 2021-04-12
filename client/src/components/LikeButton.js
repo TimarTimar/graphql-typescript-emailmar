@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Button, Icon, Label } from "semantic-ui-react";
 import InvertedPopup from "../util/InvertedPopup";
 import { LIKE_POST_MUTATION } from "../util/graphql";

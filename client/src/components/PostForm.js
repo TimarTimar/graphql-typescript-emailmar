@@ -1,5 +1,5 @@
-import { gql, useMutation } from "@apollo/client";
 import React from "react";
+import { useMutation } from "@apollo/client";
 import { Button, Form } from "semantic-ui-react";
 
 import { useForm } from "../util/hooks";

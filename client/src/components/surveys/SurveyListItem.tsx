@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { SurveyInterface } from "./types";
 import { tw } from "../../TailwindClasses/Buttons";
 import { FaEnvelopeOpen, FaEnvelope } from "react-icons/fa";
@@ -16,13 +16,12 @@ const SurveyListItem = ({
 	state,
 	title,
 	body,
-	dateSent,
 	createdAt,
 	yes,
 	no,
 	showModal,
 }: SurveyWithModalAndFilter) => {
-	const [quickSendSurvey, { data }] = useMutation(QUICK_SEND_SURVEY_MUTATION, {
+	const [quickSendSurvey] = useMutation(QUICK_SEND_SURVEY_MUTATION, {
 		variables: {
 			surveyId: id,
 		},

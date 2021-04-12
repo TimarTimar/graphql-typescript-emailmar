@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 //import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Payments from "../util/Payments";
 import { FETCH_ME_QUERY } from "../util/graphql";
 //import { RootState } from "../reducers";
@@ -13,7 +13,6 @@ const Header = () => {
 	const { data } = useQuery(FETCH_ME_QUERY);
 	const credits = data?.me?.credits;
 	console.log(credits);
-	const [activeItem, setActiveItem] = useState("home");
 
 	const renderContent = () => {
 		if (!user) {

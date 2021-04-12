@@ -1,11 +1,10 @@
 import React, { useState, useContext } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Button, Form } from "semantic-ui-react";
 
 //Custom hook
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
-import { Interface } from "node:readline";
 import { LOGIN_USER } from "../util/graphql";
 
 export default function Login(props: any) {

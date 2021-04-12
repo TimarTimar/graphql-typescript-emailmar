@@ -2,13 +2,13 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
-import NavBar from "./components/NavBar";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SinglePost from "./pages/SinglePost";
 import { AuthProvider } from "./context/auth";
 import AuthRoute from "./util/AuthRoute";
-import SurveyList from "./components/surveys/SurveyList";
+
 import { FormikSurveyNew } from "./components/surveys/formikForm/FormikSurveyNew";
 import { FormikSurveyListItemEdit } from "./components/surveys/formikForm/FormikSurveyListItemEdit";
 import { FormikSurveyForm } from "./components/surveys/formikForm/FormikSurveyForm";

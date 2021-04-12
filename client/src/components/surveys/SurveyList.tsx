@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal";
 
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import SurveyListItem from "./SurveyListItem";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { SurveyInterface } from "./types";
@@ -78,7 +78,7 @@ const SurveyList = () => {
 		if (surveys) {
 			console.log("surveys", surveys);
 			const surveyArray = surveys;
-
+			//TODO: FIX Sorting
 			if (sorting === "desc") {
 				surveyArray.slice().sort((a, b) => {
 					return (

@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import InvertedPopup from "../util/InvertedPopup";
 import {
 	Button,

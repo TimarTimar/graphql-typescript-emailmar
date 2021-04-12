@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Button, Icon, Confirm } from "semantic-ui-react";
 import InvertedPopup from "../util/InvertedPopup";
 import {

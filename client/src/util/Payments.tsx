@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
-import { gql, useMutation } from "@apollo/client";
-import axios from "axios";
-
+import { useMutation } from "@apollo/client";
 import { tw } from "../TailwindClasses/Buttons";
 import { AuthContext } from "../context/auth";
 import { PAY_5_USD_MUTATION } from "./graphql";
@@ -13,6 +11,7 @@ const Payments = (props: any) => {
 		console.log(res);
 	};*/
 	const context = useContext(AuthContext);
+	console.log(context);
 	const [myToken, setMyToken] = useState("");
 	const [handleToken, {}] = useMutation(PAY_5_USD_MUTATION, {
 		variables: {

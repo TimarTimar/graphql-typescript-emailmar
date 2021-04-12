@@ -1,11 +1,9 @@
 // SurveyNew shows SurveyForm and SurveyReview, you can jump back and force review and edit formvalues
-import axios from "axios";
-import { useFormikContext } from "formik";
 import React, { useState } from "react";
 import { tw } from "../../../TailwindClasses/Buttons";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { FormikSurveyFormValues, SurveyFormFieldsList } from "./types";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import {
 	CREATE_SURVEY_AND_SEND_MUTATUION,
 	CREATE_SURVEY_MUTATUION,
@@ -20,12 +18,7 @@ export const FormikSurveyNew = () => {
 		recipients: "",
 	});
 
-	const sendSurvey = async (values: FormikSurveyFormValues) => {
-		await axios.post("/api/surveys", values);
-		window.location.assign("/surveys");
-	};
-
-	const [createSurveyAsDraft, { data }] = useMutation(CREATE_SURVEY_MUTATUION, {
+	const [createSurveyAsDraft] = useMutation(CREATE_SURVEY_MUTATUION, {
 		variables: formikFormValues,
 	});
 

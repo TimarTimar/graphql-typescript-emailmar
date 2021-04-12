@@ -1,17 +1,16 @@
-import axios from "axios";
 import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router";
 import { tw } from "../../../TailwindClasses/Buttons";
 import { FormikSurveyForm } from "./FormikSurveyForm";
-import { saveAsDraft, sendSurvey } from "./surveyRoutes";
+
 import {
 	EDIT_SURVEY_AND_SEND_MUTATION,
 	FETCH_SURVEY_QUERY,
 	SAVE_AS_DRAFT_SURVEY_MUTUTATION,
 } from "../../../util/graphql";
-import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
+import { FormikSurveyFormValues } from "./types";
 
 interface FormikSurveyListItemEditProps {}
 
@@ -74,21 +73,18 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 
 	const FormikChildComponent = (props: FormikChildComponentProps) => {
 		const formik = useFormikContext<FormikSurveyFormValues>();
-		const [saveAsDraftSurvey, { error }] = useMutation(
-			SAVE_AS_DRAFT_SURVEY_MUTUTATION,
-			{
-				variables: {
-					surveyId,
-					body: formik.values.body,
-					title: formik.values.title,
-					subject: formik.values.subject,
-					recipients: formik.values.recipients,
-				},
-				onError(err) {
-					return err;
-				},
-			}
-		);
+		const [saveAsDraftSurvey] = useMutation(SAVE_AS_DRAFT_SURVEY_MUTUTATION, {
+			variables: {
+				surveyId,
+				body: formik.values.body,
+				title: formik.values.title,
+				subject: formik.values.subject,
+				recipients: formik.values.recipients,
+			},
+			onError(err) {
+				return err;
+			},
+		});
 		const wrapSaveAsDraftSurvey = async () => {
 			setIsLoading(true);
 			await saveAsDraftSurvey();
