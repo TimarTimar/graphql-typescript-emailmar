@@ -60,6 +60,7 @@ export const PAY_5_USD_MUTATION = gql`
 	}
 `;
 
+/*
 //Post Queries
 export const FETCH_POSTS_QUERY = gql`
 	{
@@ -183,6 +184,7 @@ export const LIKE_POST_MUTATION = gql`
 		}
 	}
 `;
+*/
 
 //Survey Queries
 
