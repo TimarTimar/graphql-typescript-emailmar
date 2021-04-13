@@ -6,10 +6,16 @@ import { Button, Form } from "semantic-ui-react";
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 import { LOGIN_USER } from "../util/graphql";
+import { History } from "history";
+import { LoginInterface } from "../util/AuthTypes";
 
-export default function Login(props: any) {
+interface LoginProps {
+	history: History;
+}
+
+const Login: React.FunctionComponent<LoginProps> = ({ history }) => {
 	const context = useContext(AuthContext);
-	const [errors, setErrors] = useState<UserInputInterface>({
+	const [errors, setErrors] = useState<LoginInterface>({
 		password: "",
 		username: "",
 	});
@@ -22,7 +28,7 @@ export default function Login(props: any) {
 	const [loginUser, { loading }] = useMutation(LOGIN_USER, {
 		update(_, { data: { login: userData } }) {
 			context.login(userData);
-			props.history.push("/");
+			history.push("/");
 		},
 		onError(err: any) {
 			setErrors(err.graphQLErrors[0].extensions.errors);
@@ -81,19 +87,6 @@ export default function Login(props: any) {
 			)}
 		</div>
 	);
-}
-export interface UserInterface {
-	id: string;
-	email: string;
-	username: string;
-	createdAt: string;
-	token: string;
-	credits: number;
-}
+};
 
-export interface UserInputInterface {
-	username: string;
-	password: string;
-	confirmPassword?: string;
-	email?: string;
-}
+export default Login;

@@ -7,5 +7,5 @@ export interface RegistrationInterface {
 
 export interface LoginInterface {
 	username: string;
-	email: string;
+	password: string;
 }
