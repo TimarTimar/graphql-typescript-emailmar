@@ -1,14 +1,25 @@
 import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { Button, Form } from "semantic-ui-react";
+import { History } from "history";
 
 //Custom hook
 import { useForm } from "../util/hooks";
 import { REGISTER_USER } from "../util/graphql";
+import { AuthContext } from "../context/auth";
 
-export default function Register(props) {
-	const context = useContext(AudioContext);
-	const [errors, setErrors] = useState({});
+interface RegisterProps {
+	history: History;
+}
+
+const Register: React.FunctionComponent<RegisterProps> = ({ history }) => {
+	const context = useContext(AuthContext);
+	const [errors, setErrors] = useState({
+		username: "",
+		password: "",
+		email: "",
+		confirmPassword: "",
+	});
 
 	const { onChange, onSubmit, values } = useForm(registerUserCallback, {
 		username: "",
@@ -20,12 +31,12 @@ export default function Register(props) {
 	const [registerUser, { loading }] = useMutation(REGISTER_USER, {
 		update(_, { data: { register: userData } }) {
 			context.login(userData);
-			props.history.push("/");
+			history.push("/");
 		},
 		onError(err) {
-			setErrors(
-				err.graphQLErrors[0] ? err.graphQLErrors[0].extensions.errors : {}
-			);
+			if (err) {
+				setErrors(err.graphQLErrors[0]?.extensions?.errors);
+			}
 		},
 		variables: {
 			username: values.username,
@@ -49,7 +60,7 @@ export default function Register(props) {
 					name="username"
 					value={values.username}
 					onChange={onChange}
-					error={errors?.username ? true : false}
+					error={errors.username ? true : false}
 				/>
 				<Form.Input
 					label="Email"
@@ -58,7 +69,7 @@ export default function Register(props) {
 					name="email"
 					value={values.email}
 					onChange={onChange}
-					error={errors?.email ? true : false}
+					error={errors.email ? true : false}
 				/>
 				<Form.Input
 					label="Password"
@@ -67,7 +78,7 @@ export default function Register(props) {
 					name="password"
 					value={values.password}
 					onChange={onChange}
-					error={errors?.password ? true : false}
+					error={errors.password ? true : false}
 				/>
 
 				<Form.Input
@@ -77,13 +88,16 @@ export default function Register(props) {
 					name="confirmPassword"
 					value={values.confirmPassword}
 					onChange={onChange}
-					error={errors?.confirmPassword ? true : false}
+					error={errors.confirmPassword ? true : false}
 				/>
 				<Button type="submit" primary>
 					Register
 				</Button>
 			</Form>
-			{Object.keys(errors).length !== 0 && (
+			{(errors.username ||
+				errors.email ||
+				errors.password ||
+				errors.confirmPassword) && (
 				<div className="ui error message">
 					<ul className="list">
 						{Object.values(errors).map((value) => {
@@ -95,4 +109,6 @@ export default function Register(props) {
 			)}
 		</div>
 	);
-}
+};
+
+export default Register;

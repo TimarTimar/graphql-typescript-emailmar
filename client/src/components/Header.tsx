@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 //import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/auth";
@@ -11,8 +11,10 @@ const Header = () => {
 	//const auth = useSelector((state: RootState) => state.auth);
 	const { user, logout } = useContext<any>(AuthContext);
 	const { data } = useQuery(FETCH_ME_QUERY);
-	const credits = data?.me?.credits;
-	console.log(credits);
+
+	let credits = data?.me?.credits;
+
+	useEffect(() => {}, [credits]);
 
 	const renderContent = () => {
 		if (!user) {
