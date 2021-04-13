@@ -65,20 +65,6 @@ export default function Login(props: any) {
 					Login
 				</Button>
 			</Form>
-			{/*Object.keys(errors).length !== 0 && (
-				<div className="ui error message">
-					<ul className="list">
-						{Object.values(errors).map((value) => {
-							if (value !== "") {
-								console.log("uh,?", errors);
-								return <li key={value}>{value}</li>;
-							} else {
-								return null;
-							}
-						})}
-					</ul>
-				</div>
-					)*/}
 			{(errors.username || errors.password) && (
 				<div className="ui error message">
 					<ul className="list">
