@@ -1,9 +1,11 @@
+import { MyContext } from "../types/Mycontext";
+
 const { AuthenticationError } = require("apollo-server");
 
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config/keys");
 
-module.exports = (context) => {
+module.exports = (context: MyContext) => {
 	// context = { ... headers }
 	const authHeader = context.req.headers.authorization;
 	if (authHeader) {
