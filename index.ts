@@ -1,4 +1,4 @@
-const { ApolloServer, PubSub } = require("apollo-server");
+import { ApolloServer, PubSub } from "apollo-server";
 const mongoose = require("mongoose");
 
 const typeDefs = require("./graphql/typeDefs");
@@ -25,6 +25,6 @@ mongoose
 			console.log(`Server running at ${res.url}`);
 		});
 	})
-	.catch((err) => {
+	.catch((err: Error) => {
 		console.error(err);
 	});
