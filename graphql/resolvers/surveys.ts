@@ -1,3 +1,8 @@
+import { AuthenticationError } from "apollo-server-errors";
+import { MyContext } from "../../types/Mycontext";
+import { SurveySchemaTypes } from "../../types/SchemaTypes/SurveySchemaTypes";
+import { SurveyInputTypes } from "../../types/SurveyInputTypes";
+
 const { UserInputError } = require("apollo-server-errors");
 const Survey = require("../../models/Survey");
 const User = require("../../models/User");
@@ -16,7 +21,11 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
-		async getSurvey(_, { surveyId }, context) {
+		async getSurvey(
+			_: any,
+			{ surveyId }: { surveyId: string },
+			context: MyContext
+		) {
 			console.log("getSurvey");
 			const { username } = checkAuth(context);
 			try {
@@ -31,7 +40,7 @@ module.exports = {
 			}
 		},
 		// only return the logged in users survey, return empty list if he/she dont have any
-		async getSurveysByUser(_, __, context) {
+		async getSurveysByUser(_: any, __: any, context: MyContext) {
 			console.log("getSurveyByUser");
 			const me = checkAuth(context);
 			try {
@@ -46,9 +55,11 @@ module.exports = {
 	},
 	Mutation: {
 		async createSurvey(
-			_,
-			{ surveyInput: { title, subject, body, recipients } },
-			context
+			_: any,
+			{
+				surveyInput: { title, subject, body, recipients },
+			}: { surveyInput: SurveyInputTypes },
+			context: MyContext
 		) {
 			console.log("createSurvey");
 			//get error if something missing, and cant move towards
@@ -77,9 +88,11 @@ module.exports = {
 			return survey;
 		},
 		async createSurveyAndSend(
-			_,
-			{ surveyInput: { title, subject, body, recipients } },
-			context
+			_: any,
+			{
+				surveyInput: { title, subject, body, recipients },
+			}: { surveyInput: SurveyInputTypes },
+			context: MyContext
 		) {
 			console.log("createSurveyAndSend");
 			//get error if something missing, and cant move towards
@@ -122,7 +135,11 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
-		async deleteSurvey(_, { surveyId }, context) {
+		async deleteSurvey(
+			_: any,
+			{ surveyId }: { surveyId: string },
+			context: MyContext
+		) {
 			console.log("deleteSurvey");
 			try {
 				const { username } = checkAuth(context);
@@ -140,9 +157,12 @@ module.exports = {
 			}
 		},
 		async editSurvey(
-			_,
-			{ surveyInput: { title, subject, body, recipients }, surveyId },
-			context
+			_: any,
+			{
+				surveyInput: { title, subject, body, recipients },
+				surveyId,
+			}: { surveyInput: SurveyInputTypes; surveyId: string },
+			context: MyContext
 		) {
 			console.log("editSurvey");
 			const user = checkAuth(context);
@@ -175,7 +195,11 @@ module.exports = {
 				throw new Error(err);
 			}
 		},
-		async quickSendSurvey(_, { surveyId }, context) {
+		async quickSendSurvey(
+			_: any,
+			{ surveyId }: { surveyId: string },
+			context: MyContext
+		) {
 			console.log("quickSendSurvey");
 			//get error if something missing, and cant move towards
 			const user = checkAuth(context);
@@ -205,9 +229,12 @@ module.exports = {
 			}
 		},
 		async editSurveyAndSend(
-			_,
-			{ surveyInput: { title, subject, body, recipients }, surveyId },
-			context
+			_: any,
+			{
+				surveyInput: { title, subject, body, recipients },
+				surveyId,
+			}: { surveyInput: SurveyInputTypes; surveyId: string },
+			context: MyContext
 		) {
 			console.log("editSurveyAndSend");
 			const user = checkAuth(context);
@@ -248,10 +275,11 @@ module.exports = {
 				} catch (err) {
 					throw new Error(err);
 				}
-			} else
-				(err) => {
-					throw new new Error(err)();
-				};
+			} else {
+				throw new Error(
+					"Sorry something went very wrong we could not found you and your survey please log in refresh the page and try again"
+				);
+			}
 		},
 	},
 };

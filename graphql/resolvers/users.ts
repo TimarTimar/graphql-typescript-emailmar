@@ -1,3 +1,7 @@
+import { AuthTypes } from "../../types/AuthTypes";
+import { MyContext } from "../../types/Mycontext";
+import { UserSchemaTypes } from "../../types/SchemaTypes/UserSchemaTypes";
+
 const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const keys = require("../../config/keys");
@@ -13,7 +17,7 @@ const { SECRET_KEY } = require("../../config/keys");
 const checkAuth = require("../../util/check-auth");
 const { findById } = require("../../models/User");
 
-function generateToken(user) {
+function generateToken(user: UserSchemaTypes) {
 	return jwt.sign(
 		{
 			id: user.id,
@@ -27,7 +31,7 @@ function generateToken(user) {
 
 module.exports = {
 	Query: {
-		async me(_, __, context) {
+		async me(_: any, __: any, context: MyContext) {
 			console.log("me");
 			const user = checkAuth(context);
 			if (user) {
@@ -45,7 +49,7 @@ module.exports = {
 		},
 	},
 	Mutation: {
-		async login(_, { username, password }) {
+		async login(_: any, { username, password }: UserSchemaTypes) {
 			console.log("login");
 			const { valid, errors } = validateLoginInput(username, password);
 			if (!valid) {
@@ -75,8 +79,10 @@ module.exports = {
 		},
 
 		async register(
-			_,
-			{ registerInput: { username, email, password, confirmPassword } }
+			_: any,
+			{
+				registerInput: { username, email, password, confirmPassword },
+			}: { registerInput: AuthTypes }
 		) {
 			console.log("register");
 			// Validate user data
@@ -124,12 +130,13 @@ module.exports = {
 				token,
 			};
 		},
-		async pay5usd(_, token, context) {
+		async pay5usd(_: any, token: { token: string }, context: MyContext) {
 			console.log("pay5usd");
 			const user = checkAuth(context);
+			console.log("token", token);
 
 			const { credits } = await User.findById(user.id);
-			newCredits = credits + 5;
+			const newCredits = credits + 5;
 
 			const myToken = Object.values(token);
 
