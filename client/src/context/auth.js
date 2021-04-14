@@ -42,11 +42,12 @@ function AuthProvider(props) {
 		});
 	}
 
-	function logout(userData) {
+	function logout() {
 		localStorage.removeItem("jwtToken");
 		dispatch({
 			type: "LOGOUT",
 		});
+		window.location.assign("/");
 	}
 
 	return (

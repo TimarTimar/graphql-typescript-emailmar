@@ -22,12 +22,9 @@ export const FormikSurveyNew = () => {
 		variables: formikFormValues,
 	});
 
-	const [createSurveyAndSend, {}] = useMutation(
-		CREATE_SURVEY_AND_SEND_MUTATUION,
-		{
-			variables: formikFormValues,
-		}
-	);
+	const [createSurveyAndSend] = useMutation(CREATE_SURVEY_AND_SEND_MUTATUION, {
+		variables: formikFormValues,
+	});
 
 	const renderContent = () => {
 		if (showFormReview) {

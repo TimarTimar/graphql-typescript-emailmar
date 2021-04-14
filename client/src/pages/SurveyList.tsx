@@ -1,14 +1,16 @@
+//List of all the surveys. User can create delete edit and send surveys from here.
+
 import React, { useEffect, useState } from "react";
-import Modal from "../Modal";
+import Modal from "../components/Modal";
 
 import { useMutation, useQuery } from "@apollo/client";
-import SurveyListItem from "./SurveyListItem";
+import SurveyListItem from "../components/surveys/SurveyListItem";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import { SurveyInterface } from "./types";
+import { SurveyInterface } from "../components/surveys/types";
 import {
 	FETCH_SURVEYSBYUSER_QUERY,
 	DELETE_SURVEY_MUTATION,
-} from "../../util/graphql";
+} from "../util/graphql";
 //import { tw } from "../../TailwindClasses/Buttons";
 
 const SurveyList = () => {
@@ -31,7 +33,7 @@ const SurveyList = () => {
 	const { getSurveysByUser: surveys }: { getSurveysByUser: SurveyInterface[] } =
 		data || [];
 
-	const [deleteSurvey, {}] = useMutation(DELETE_SURVEY_MUTATION, {
+	const [deleteSurvey] = useMutation(DELETE_SURVEY_MUTATION, {
 		variables: {
 			surveyId: selectedSurvey,
 		},

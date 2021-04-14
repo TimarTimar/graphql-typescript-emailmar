@@ -12,11 +12,7 @@ import {
 } from "../../../util/graphql";
 import { FormikSurveyFormValues } from "./types";
 
-interface FormikSurveyListItemEditProps {}
-
-interface FormikChildComponentProps {}
-
-export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> = ({}) => {
+export const FormikSurveyListItemEdit = () => {
 	const [formikFormValues, setFormikFormValues] = useState({
 		title: "",
 		subject: "",
@@ -71,7 +67,7 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 		window.location.assign("/surveys");
 	}
 
-	const FormikChildComponent = (props: FormikChildComponentProps) => {
+	const FormikChildComponent = () => {
 		const formik = useFormikContext<FormikSurveyFormValues>();
 		const [saveAsDraftSurvey] = useMutation(SAVE_AS_DRAFT_SURVEY_MUTUTATION, {
 			variables: {
