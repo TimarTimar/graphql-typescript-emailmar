@@ -1,6 +1,7 @@
 const keys = require("../../config/keys");
+import { SurveySchemaTypes } from "../../types/SchemaTypes/SurveySchemaTypes";
 
-module.exports = (survey) => {
+module.exports = (survey: SurveySchemaTypes) => {
 	return `
     <html>
         <body>
