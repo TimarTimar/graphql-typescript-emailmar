@@ -31,7 +31,7 @@ const Login: React.FunctionComponent<LoginProps> = ({ history }) => {
 			history.push("/");
 		},
 		onError(err: any) {
-			setErrors(err.graphQLErrors[0].extensions.errors);
+			setErrors(err.graphQLErrors[0]?.extensions.errors);
 		},
 		variables: {
 			username: values.username,
