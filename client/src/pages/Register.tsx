@@ -30,6 +30,7 @@ const Register: React.FunctionComponent<RegisterProps> = ({ history }) => {
 
 	const [registerUser, { loading }] = useMutation(REGISTER_USER, {
 		update(_, { data: { register: userData } }) {
+			console.log(userData);
 			context.login(userData);
 			history.push("/");
 		},

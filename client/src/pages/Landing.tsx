@@ -29,8 +29,8 @@ const Landing = () => {
 						</linearGradient>
 					</defs>
 					<g fill="url(#illustration-01)" fillRule="evenodd">
-						<circle cx="1232" cy="228" r="64" />
-						<circle cx="155" cy="443" r="64" />
+						<circle cx="1202" cy="228" r="64" />
+						<circle cx="30" cy="443" r="64" />
 					</g>
 				</svg>
 			</div>
