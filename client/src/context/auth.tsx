@@ -1,21 +1,38 @@
-import React, { createContext, useReducer } from "react";
+import React, {
+	createContext,
+	ReactChildren,
+	Reducer,
+	useReducer,
+} from "react";
 import jwtDecode from "jwt-decode";
 
-const initialState /*: { user: null | decodedTokenInterface } */ = {
+const initialState: { user: null | decodedTokenInterface } = {
 	user: null,
 };
 
-/*interface decodedTokenInterface {
+//user interface that login and register gives back
+
+interface userDataInterface {
+	id: string;
+	email: string;
+	username: string;
+	createdAt: string;
+	token: string;
+	credits: number;
+}
+
+//user interface what jwt decode gives back
+interface decodedTokenInterface {
 	id: string;
 	email: string;
 	username: string;
 	iat: number;
 	exp: number;
-}*/
+}
 
 if (localStorage.getItem("jwtToken")) {
-	const decodedToken /*:decodedTokenInterface*/ = jwtDecode(
-		localStorage.getItem("jwtToken") /*!*/
+	const decodedToken: decodedTokenInterface = jwtDecode(
+		localStorage.getItem("jwtToken")!
 	);
 	console.log("decoded", decodedToken);
 	if (decodedToken.exp * 1000 < Date.now()) {
@@ -27,11 +44,14 @@ if (localStorage.getItem("jwtToken")) {
 
 const AuthContext = createContext({
 	user: null,
-	login: (userData) => {},
+	login: (userData: userDataInterface) => {},
 	logout: () => {},
 });
 
-function authReducer(state, action) {
+function authReducer(
+	state: { user: decodedTokenInterface },
+	action: { type: string; payload?: userDataInterface }
+) {
 	switch (action.type) {
 		default:
 			return state;
@@ -42,11 +62,14 @@ function authReducer(state, action) {
 	}
 }
 
-function AuthProvider(props) {
-	const [state, dispatch] = useReducer(authReducer, initialState);
+const AuthProvider: React.FunctionComponent = (props) => {
+	const [state, dispatch] = useReducer<Reducer<any, any>>(
+		authReducer,
+		initialState
+	);
 	console.log("state", state, "disp", dispatch);
 
-	function login(userData) {
+	function login(userData: userDataInterface) {
 		localStorage.setItem("jwtToken", userData.token);
 		dispatch({
 			type: "LOGIN",
@@ -67,6 +90,6 @@ function AuthProvider(props) {
 			{...props}
 		/>
 	);
-}
+};
 
 export { AuthContext, AuthProvider };

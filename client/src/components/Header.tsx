@@ -10,14 +10,11 @@ import { FETCH_ME_QUERY } from "../util/graphql";
 const Header = () => {
 	//const auth = useSelector((state: RootState) => state.auth);
 	const { user, logout } = useContext<any>(AuthContext);
-	console.log("userKE", user);
 	const { data } = useQuery(FETCH_ME_QUERY);
 
 	let credits = data?.me?.credits;
 
 	useEffect(() => {}, [credits]);
-
-	console.log("user", user);
 
 	const renderContent = () => {
 		if (!user) {
