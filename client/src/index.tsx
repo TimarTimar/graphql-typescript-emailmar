@@ -8,7 +8,7 @@ import {
 	InMemoryCache,
 } from "@apollo/client";
 import App from "./App";
-import { setContext } from "apollo-link-context";
+import { setContext } from "@apollo/client/link/context";
 
 const httpLink = createHttpLink({
 	uri: "http://localhost:5000/",
