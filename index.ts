@@ -1,4 +1,6 @@
-import { ApolloServer, PubSub } from "apollo-server";
+import { ApolloServer, PubSub } from "apollo-server-express";
+import express from "express";
+import { start } from "node:repl";
 const mongoose = require("mongoose");
 
 const typeDefs = require("./graphql/typeDefs");
@@ -15,7 +17,7 @@ const server = new ApolloServer({
 	context: ({ req }) => ({ req, pubsub }),
 });
 
-mongoose
+/*mongoose
 	.connect(MONGODB, {
 		useNewUrlParser: true,
 	})
@@ -28,3 +30,33 @@ mongoose
 	.catch((err: Error) => {
 		console.error(err);
 	});
+*/
+
+async function startApolloServer() {
+	const app = express();
+	await mongoose.connect(MONGODB, {
+		useNewUrlParser: true,
+	});
+	console.log("mongoose connected");
+	const server = new ApolloServer({
+		typeDefs,
+		resolvers,
+		context: ({ req }) => ({ req, pubsub }),
+	});
+	await server.start();
+	require("./routes/surveyRoutes")(app);
+	server.applyMiddleware({ app });
+	app.use((req, res) => {
+		res.status(200);
+		res.send("Hello!");
+		res.end();
+	});
+
+	await new Promise<void>((resolve) => app.listen({ port: PORT }, resolve));
+	console.log(
+		`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
+	);
+	return { server, app };
+}
+
+startApolloServer();
