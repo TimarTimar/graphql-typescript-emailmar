@@ -3,8 +3,6 @@ import _ from "lodash";
 import { Path } from "path-parser";
 import { URL } from "url";
 
-const Mailer = require("../services/Mailer");
-const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 const Survey = require("../models/Survey");
 
 module.exports = (app: Application) => {
@@ -49,6 +47,5 @@ module.exports = (app: Application) => {
 
 	app.get("/api/surveys/:surveyId/:choice", (req, res) => {
 		res.send("Thanks for voting");
-		res.redirect("/thankyou");
 	});
 };
