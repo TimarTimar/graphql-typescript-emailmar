@@ -25,8 +25,9 @@ module.exports = (app: Application) => {
 			//remove undefined elements
 			.compact()
 			.uniqBy(["email", "surveyId"])
-			.each(({ surveyId, email, choice }) => {
-				Survey.updateOne(
+			.each(async ({ surveyId, email, choice }) => {
+				console.log("update Survey");
+				await Survey.updateOne(
 					{
 						_id: surveyId,
 						recipients: {
