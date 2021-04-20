@@ -1,8 +1,8 @@
-export interface RegistrationInterface {
+export interface RegistrationAndLoginInterface {
 	username: string;
-	email: string;
+	email?: string;
 	password: string;
-	confirmPassword: string;
+	confirmPassword?: string;
 }
 
 export interface LoginInterface {

@@ -1,3 +1,5 @@
+import { SurveySchemaTypes } from "../types/SchemaTypes/SurveySchemaTypes";
+
 const sendgrid = require("sendgrid");
 const helper = sendgrid.mail;
 const keys = require("../config/keys");
@@ -5,7 +7,10 @@ const keys = require("../config/keys");
 //TODO
 
 class Mailer extends helper.Mail {
-	constructor({ subject, recipients }, content) {
+	constructor(
+		{ subject, recipients }: SurveySchemaTypes,
+		content: HTMLElement
+	) {
 		super();
 
 		this.sgApi = sendgrid(keys.sendGridKey);
@@ -20,7 +25,7 @@ class Mailer extends helper.Mail {
 	}
 
 	// TODO:
-	formatAddresses(recipients) {
+	formatAddresses(recipients: { email: string; responded: boolean }[]) {
 		if (recipients) {
 			return recipients.map(({ email }) => {
 				return new helper.Email(email);
@@ -41,9 +46,11 @@ class Mailer extends helper.Mail {
 	addRecipients() {
 		const personalize = new helper.Personalization();
 
-		this.recipients.forEach((recipient) => {
-			personalize.addTo(recipient);
-		});
+		this.recipients.forEach(
+			(recipient: { email: string; responded: boolean }[]) => {
+				personalize.addTo(recipient);
+			}
+		);
 		this.addPersonalization(personalize);
 	}
 

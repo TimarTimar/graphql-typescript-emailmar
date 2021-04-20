@@ -28,17 +28,12 @@ const Header = () => {
 					</li>
 				</>
 			);
-		} else if (user !== null) {
+		} else if (user) {
 			return (
 				<>
 					<li key="/surveys" className="pr-4">
 						<Link className="hover:text-green-200" to="/surveys">
 							Surveys
-						</Link>
-					</li>
-					<li key="/posts" className="pr-4">
-						<Link className="hover:text-green-200" to="/posts">
-							Posts
 						</Link>
 					</li>
 					<li key="1" className="pr-4 hover:text-green-200">

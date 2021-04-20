@@ -1,10 +1,12 @@
+import { AuthTypes } from "../types/AuthTypes";
+
 module.exports.validateRegisterInput = (
-	username,
-	email,
-	password,
-	confirmPassword
+	username: string,
+	email: string,
+	password: string,
+	confirmPassword: string
 ) => {
-	const errors = {};
+	const errors: AuthTypes = {};
 	if (username.trim() === "") {
 		errors.username = "Username must not be empty";
 	}
@@ -30,8 +32,8 @@ module.exports.validateRegisterInput = (
 	};
 };
 
-module.exports.validateLoginInput = (username, password) => {
-	const errors = {};
+module.exports.validateLoginInput = (username: string, password: string) => {
+	const errors: AuthTypes = {};
 	if (username.trim() === "") {
 		errors.username = "Username must not be empty";
 	}

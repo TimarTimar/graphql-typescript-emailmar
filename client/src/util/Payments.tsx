@@ -1,27 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { useMutation } from "@apollo/client";
 import { tw } from "../TailwindClasses/Buttons";
-import { AuthContext } from "../context/auth";
 import { PAY_5_USD_MUTATION } from "./graphql";
 
-const Payments = (props: any) => {
-	/*const handleToken = async (token: any) => {
-		const res = await axios.post("/api/stripe", token);
-		console.log(res);
-	};*/
-	const context = useContext(AuthContext);
-	console.log(context);
+const Payments = () => {
 	const [myToken, setMyToken] = useState("");
-	const [handleToken, {}] = useMutation(PAY_5_USD_MUTATION, {
+	const [handleToken] = useMutation(PAY_5_USD_MUTATION, {
 		variables: {
 			token: myToken,
 		},
 	});
 	const wrapHandlaToken = async (token: any) => {
-		console.log(token, "token");
 		const { id } = token;
-		console.log(id);
 		setMyToken(id);
 		await handleToken();
 		window.location.assign("/surveys");
