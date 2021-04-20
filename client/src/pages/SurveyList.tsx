@@ -19,7 +19,6 @@ const SurveyList = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedSurvey, setSelectedSurvey] = useState("");
 	const [sorting, setSorting] = useState("asc");
-	const [filter, setFilter] = useState("sent-draft");
 	const [values, setValues] = useState<any>("sent-draft");
 
 	const showModal = (id: string) => {
@@ -43,50 +42,6 @@ const SurveyList = () => {
 	});
 
 	useEffect(() => {}, []);
-
-	const renderFilterSelection = () => {
-		return (
-			<select
-				id="dropdown"
-				className="ui dropdown"
-				style={{ width: "100%" }}
-				value={filter}
-				onChange={(e) => setFilter(e.target.value)}
-			>
-				<option value="sent-draft">All surveys</option>
-				<option value="sent">Sent surveys</option>
-				<option value="draft">Draft surveys</option>
-			</select>
-		);
-	};
-
-	/*const renderFilterSelection2 = () => {
-		const options = [
-			{ key: "draft", text: "draft", value: "draft" },
-			{ key: "sent", text: "sent", value: "sent" },
-		];
-
-		const onChange = (
-			event: React.SyntheticEvent<HTMLElement, Event>,
-			result: DropdownProps
-		) => {
-			const { value } = result || event.target;
-			setValues(value);
-		};
-
-		console.log(values);
-		return (
-			<Dropdown
-				placeholder="Skills"
-				fluid
-				multiple
-				selection
-				options={options}
-				onChange={onChange}
-				value={values}
-			/>
-		);
-	};*/
 
 	const renderFilterSelection3 = () => {
 		const tagOptions = [
@@ -183,7 +138,6 @@ const SurveyList = () => {
 							body={survey.body}
 							yes={survey.yes}
 							no={survey.no}
-							filter={filter}
 							showModal={showModal}
 						/>
 					);
@@ -193,7 +147,6 @@ const SurveyList = () => {
 
 	return (
 		<main>
-			{renderFilterSelection()}
 			{renderFilterSelection3()}
 			{renderOrderByDateButton()}
 			<Modal

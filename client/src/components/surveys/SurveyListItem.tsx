@@ -7,7 +7,6 @@ import { Button } from "semantic-ui-react";
 
 export interface SurveyWithModalAndFilter extends SurveyInterface {
 	showModal: (id: string) => void;
-	filter: string;
 }
 
 const SurveyListItem = ({
