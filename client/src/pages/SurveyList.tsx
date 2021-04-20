@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "../components/Modal";
 
 import { useMutation, useQuery } from "@apollo/client";
-import SurveyListItem2 from "../components/surveys/SurveyListItem2";
+import SurveyListItem from "../components/surveys/SurveyListItem";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { SurveyInterface } from "../components/surveys/types";
 import {
@@ -99,7 +99,7 @@ const SurveyList = () => {
 				.filter((survey) => filter.includes(survey.state))
 				.map((survey) => {
 					return (
-						<SurveyListItem2
+						<SurveyListItem
 							key={survey.id}
 							id={survey.id}
 							state={survey.state}

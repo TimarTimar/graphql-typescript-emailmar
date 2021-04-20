@@ -12,7 +12,7 @@ export interface SurveyWithModalAndFilter extends SurveyInterface {
 	filter: string;
 }
 
-const SurveyListItem2 = ({
+const SurveyListItem = ({
 	id,
 	state,
 	title,
@@ -88,4 +88,4 @@ const SurveyListItem2 = ({
 	);
 };
 
-export default SurveyListItem2;
+export default SurveyListItem;
