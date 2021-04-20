@@ -7,7 +7,7 @@ const initialState: { user: null | decodedTokenInterface } = {
 
 //user interface that login and register gives back
 
-interface userDataInterface {
+export interface userDataInterface {
 	id: string;
 	email: string;
 	username: string;
@@ -17,7 +17,7 @@ interface userDataInterface {
 }
 
 //user interface what jwt decode gives back
-interface decodedTokenInterface {
+export interface decodedTokenInterface {
 	id: string;
 	email: string;
 	username: string;
@@ -37,7 +37,11 @@ if (localStorage.getItem("jwtToken")) {
 	}
 }
 
-const AuthContext = createContext({
+const AuthContext: React.Context<{
+	user: any;
+	login: (userData: userDataInterface) => void;
+	logout: () => void;
+}> = createContext({
 	user: null,
 	login: (userData: userDataInterface) => {},
 	logout: () => {},

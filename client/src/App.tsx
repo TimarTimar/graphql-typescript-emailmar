@@ -12,15 +12,15 @@ import { FormikSurveyNew } from "./components/surveys/formikForm/FormikSurveyNew
 import { FormikSurveyListItemEdit } from "./components/surveys/formikForm/FormikSurveyListItemEdit";
 import { FormikSurveyForm } from "./components/surveys/formikForm/FormikSurveyForm";
 import SurveysDashboard from "./components/SurveysDashboard";
-import Header from "./components/Header";
 import Landing from "./pages/Landing";
+import NavBar from "./components/navigation/NavBar";
 
 function App() {
 	return (
 		<AuthProvider>
 			<div className="ui container">
 				<Router>
-					<Header />
+					<NavBar />
 					<Route path="/" exact component={Landing} />
 					<AuthRoute exact path="/login" component={Login} />
 					<AuthRoute exact path="/register" component={Register} />
