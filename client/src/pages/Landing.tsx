@@ -9,6 +9,7 @@ import {
 	Message,
 	Segment,
 } from "semantic-ui-react";
+import Timeline from "../components/timeline/Timeline";
 import { tw } from "../TailwindClasses/Buttons";
 
 const Landing = () => {
@@ -98,13 +99,22 @@ const Landing = () => {
 			<Segment style={{ padding: "8em 0em" }} vertical>
 				<Container text>
 					<Header as="h3" style={{ fontSize: "2em" }}>
-						Read more about my learning journey
+						Read more about my coding journey
 					</Header>
 					<p style={{ fontSize: "1.33em" }}>
-						Instead of focusing on content creation and hard work, we have
-						learned how to master the art of doing nothing by providing massive
-						amounts of whitespace and generic content that can seem massive,
-						monolithic and worth your attention.
+						I studied C++ at my highschool. (FMG -Math&amp;Informatics) I
+						studied VBA, C# and Oracle SQL at my unversity. (BCE-Business
+						Informatics-BSc) I was the inside implementation manager of a 2+
+						years ERP projects where we implemented Odoo 12 enterprise version.
+						Odoo's tech stack is JS on the frontend with it's own framework,
+						Python on the backend with it's own ORM api, and PostgreSQL
+						database. We customized modules, implemented custom modules and
+						integrated 3rd party APIs. Later I joined the IT company who helped
+						us implement Odoo and I dived more into the backend
+						development(~7months). I loved IT overall but I didn't really
+						enjoyed the coding experience. So listening to my friends advice I
+						gave a try to NodeJS+React full-stack web development. And I'm
+						really greatful I did.
 					</p>
 					<Button as="a" size="large">
 						Read More
@@ -133,6 +143,9 @@ const Landing = () => {
 					</Button>
 				</Container>
 			</Segment>
+			<div>
+				<Timeline />
+			</div>
 		</Container>
 	);
 };
