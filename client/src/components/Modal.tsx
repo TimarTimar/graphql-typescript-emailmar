@@ -44,8 +44,12 @@ export default function Modal({
 			<div style={MODAL_STYLES}>
 				<div className="text-center p-4">{children}</div>
 				<div className="flex justify-between my-3.5">
-					<Button onClick={onClose}>Cancel</Button>
-					<Button onClick={handleConfirm}>Confirm</Button>
+					<Button color="teal" onClick={onClose}>
+						Cancel
+					</Button>
+					<Button color="red" onClick={handleConfirm}>
+						Confirm
+					</Button>
 				</div>
 			</div>
 		</>,

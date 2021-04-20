@@ -11,7 +11,8 @@ import {
 	FETCH_SURVEYSBYUSER_QUERY,
 	DELETE_SURVEY_MUTATION,
 } from "../util/graphql";
-import { Button } from "semantic-ui-react";
+import { Button, Dropdown, DropdownProps, Input } from "semantic-ui-react";
+
 //import { tw } from "../../TailwindClasses/Buttons";
 
 const SurveyList = () => {
@@ -19,6 +20,7 @@ const SurveyList = () => {
 	const [selectedSurvey, setSelectedSurvey] = useState("");
 	const [sorting, setSorting] = useState("asc");
 	const [filter, setFilter] = useState("sent-draft");
+	const [values, setValues] = useState<any>("sent-draft");
 
 	const showModal = (id: string) => {
 		setIsOpen(true);
@@ -44,18 +46,89 @@ const SurveyList = () => {
 
 	const renderFilterSelection = () => {
 		return (
-			<div className="h-14 my-1.5">
-				<select
-					id="dropdown"
-					className="h-14 flex min-w-full hover:shadow-inner border-solid border border-gray-200"
-					value={filter}
-					onChange={(e) => setFilter(e.target.value)}
-				>
-					<option value="sent-draft">All surveys</option>
-					<option value="sent">Sent surveys</option>
-					<option value="draft">Draft surveys</option>
-				</select>
-			</div>
+			<select
+				id="dropdown"
+				className="ui dropdown"
+				style={{ width: "100%" }}
+				value={filter}
+				onChange={(e) => setFilter(e.target.value)}
+			>
+				<option value="sent-draft">All surveys</option>
+				<option value="sent">Sent surveys</option>
+				<option value="draft">Draft surveys</option>
+			</select>
+		);
+	};
+
+	/*const renderFilterSelection2 = () => {
+		const options = [
+			{ key: "draft", text: "draft", value: "draft" },
+			{ key: "sent", text: "sent", value: "sent" },
+		];
+
+		const onChange = (
+			event: React.SyntheticEvent<HTMLElement, Event>,
+			result: DropdownProps
+		) => {
+			const { value } = result || event.target;
+			setValues(value);
+		};
+
+		console.log(values);
+		return (
+			<Dropdown
+				placeholder="Skills"
+				fluid
+				multiple
+				selection
+				options={options}
+				onChange={onChange}
+				value={values}
+			/>
+		);
+	};*/
+
+	const renderFilterSelection3 = () => {
+		const tagOptions = [
+			{
+				key: "draft-sent",
+				text: "All",
+				value: "draft-sent",
+				label: { color: "teal", empty: true, circular: true },
+			},
+			{
+				key: "draft",
+				text: "Draft",
+				value: "draft",
+				label: { color: "orange", empty: true, circular: true },
+			},
+			{
+				key: "sent",
+				text: "Sent",
+				value: "sent",
+				label: { color: "purple", empty: true, circular: true },
+			},
+		];
+		return (
+			<Dropdown
+				text="Filter Surveys"
+				icon="filter"
+				floating
+				labeled
+				button
+				className="icon"
+			>
+				<Dropdown.Menu>
+					<Dropdown.Menu scrolling>
+						{tagOptions.map((option) => (
+							<Dropdown.Item
+								onClick={(e, r) => setValues(r.value)}
+								{...option}
+							/>
+						))}
+					</Dropdown.Menu>
+				</Dropdown.Menu>
+			</Dropdown>
 		);
 	};
 	const renderOrderByDateButton = () => {
@@ -96,7 +169,7 @@ const SurveyList = () => {
 			}
 
 			return surveyArray
-				.filter((survey) => filter.includes(survey.state))
+				.filter((survey) => values.includes(survey.state))
 				.map((survey) => {
 					return (
 						<SurveyListItem
@@ -121,6 +194,7 @@ const SurveyList = () => {
 	return (
 		<main>
 			{renderFilterSelection()}
+			{renderFilterSelection3()}
 			{renderOrderByDateButton()}
 			<Modal
 				open={isOpen}

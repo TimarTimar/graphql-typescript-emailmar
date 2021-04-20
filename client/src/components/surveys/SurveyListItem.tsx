@@ -29,13 +29,20 @@ const SurveyListItem = ({
 		return {
 			renderSendButton:
 				state === "draft" ? (
-					<Button className=" right floated" onClick={() => quickSendSurvey()}>
+					<Button
+						className="right floated"
+						color="teal"
+						onClick={() => quickSendSurvey()}
+					>
 						Quick Send
 					</Button>
 				) : null,
 			renderEditButton:
 				state === "draft" ? (
-					<Link to={`/edit_survey/${_id}`} className="ui button right floated">
+					<Link
+						to={`/edit_survey/${_id}`}
+						className="ui button teal right floated"
+					>
 						Edit
 					</Link>
 				) : null,
@@ -59,12 +66,15 @@ const SurveyListItem = ({
 			}}
 		>
 			<div className="ui content">
-				<div className="ui header" style={{ padding: 20, color: "whitesmoke" }}>
+				<div
+					className="ui header"
+					style={{ padding: 20, color: "whitesmoke", fontSize: 26 }}
+				>
 					{title}
 
 					{conditionalDraftRendering(id, state).stateIcon}
 				</div>
-				<div style={{ padding: 20 }}>
+				<div style={{ padding: 20, fontSize: 18 }}>
 					<p>{body}</p>
 					<p>
 						Created At:{" "}
@@ -73,10 +83,14 @@ const SurveyListItem = ({
 				</div>
 			</div>
 			<div className="ui extra content" style={{ color: "whitesmoke" }}>
-				<span>
+				<span style={{ fontSize: 20, marginLeft: 20 }}>
 					Yes: {yes} No: {no}
 				</span>
-				<Button className="right floated" onClick={() => showModal(id)}>
+				<Button
+					className="right floated"
+					color="red"
+					onClick={() => showModal(id)}
+				>
 					Delete
 				</Button>
 				{conditionalDraftRendering(id, state).renderSendButton}
