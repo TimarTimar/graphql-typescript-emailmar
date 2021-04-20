@@ -24,7 +24,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 				validationSchema={SurveyFormSchema}
 			>
 				{({ errors, touched, values }) => (
-					<Form>
+					<Form className="ui form">
 						{SurveyFormFieldsList.map((item) => {
 							return (
 								<div key={item} className="p-2">
