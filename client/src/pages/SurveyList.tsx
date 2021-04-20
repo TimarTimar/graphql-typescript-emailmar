@@ -78,17 +78,15 @@ const SurveyList = () => {
 	const renderSurveys = () => {
 		//Order By Date
 		if (surveys) {
-			console.log("surveys", surveys);
-			const surveyArray = surveys;
-			//TODO: FIX Sorting
+			const surveyArray = surveys.slice();
 			if (sorting === "desc") {
-				surveyArray.slice().sort((a, b) => {
+				surveyArray.sort((a, b) => {
 					return (
 						new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
 					);
 				});
 			} else {
-				surveyArray.slice().sort((a, b) => {
+				surveyArray.sort((a, b) => {
 					return (
 						new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
 					);
