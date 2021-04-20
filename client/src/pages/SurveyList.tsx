@@ -11,6 +11,7 @@ import {
 	FETCH_SURVEYSBYUSER_QUERY,
 	DELETE_SURVEY_MUTATION,
 } from "../util/graphql";
+import { Button } from "semantic-ui-react";
 //import { tw } from "../../TailwindClasses/Buttons";
 
 const SurveyList = () => {
@@ -60,8 +61,9 @@ const SurveyList = () => {
 	const renderOrderByDateButton = () => {
 		return (
 			<div className="flex justify-center items-center h-14">
-				<button
-					className="bg-green-600 rounded p-4 text-white"
+				<Button
+					className="huge"
+					color="teal"
 					onClick={() => {
 						sorting === "asc" ? setSorting("desc") : setSorting("asc");
 					}}
@@ -70,7 +72,7 @@ const SurveyList = () => {
 						<span className="pr-2">Order By Date</span>{" "}
 						{sorting === "asc" ? <FaArrowUp /> : <FaArrowDown />}
 					</span>
-				</button>
+				</Button>
 			</div>
 		);
 	};
