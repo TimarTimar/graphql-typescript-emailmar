@@ -2,10 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { SurveyInterface } from "./types";
-import { tw } from "../../TailwindClasses/Buttons";
-import { FaEnvelopeOpen, FaEnvelope } from "react-icons/fa";
 import { QUICK_SEND_SURVEY_MUTATION } from "../../util/graphql";
-import { Button, Container } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 export interface SurveyWithModalAndFilter extends SurveyInterface {
 	showModal: (id: string) => void;

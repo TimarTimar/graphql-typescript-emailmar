@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Icon, Menu, MenuItemProps } from "semantic-ui-react";
+import { Menu, MenuItemProps } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth";
 import { useQuery } from "@apollo/client";
@@ -7,7 +7,7 @@ import { FETCH_ME_QUERY } from "../../util/graphql";
 import Payments from "../../util/Payments";
 
 export default function AuthenticatedNavBar() {
-	const { user, logout } = useContext(AuthContext);
+	const { logout } = useContext(AuthContext);
 
 	const [activeItem, setActiveItem] = useState("home");
 

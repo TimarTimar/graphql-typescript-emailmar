@@ -1,7 +1,6 @@
 import React, { CSSProperties, MouseEventHandler, ReactNode } from "react";
 import ReactDom from "react-dom";
 import { Button } from "semantic-ui-react";
-import { tw } from "../TailwindClasses/Buttons";
 
 const MODAL_STYLES: CSSProperties = {
 	position: "fixed",

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { useMutation } from "@apollo/client";
-import { tw } from "../TailwindClasses/Buttons";
 import { PAY_5_USD_MUTATION } from "./graphql";
 import { Button, Icon } from "semantic-ui-react";
 
@@ -30,7 +29,7 @@ const Payments = () => {
 					: "Stripe Key Not Provided"
 			}
 		>
-			<Button basic size="big" color="teal" content="teal">
+			<Button basic size="big" color="teal">
 				<Icon color="teal" name="money bill alternate outline" /> Add credits
 			</Button>
 		</StripeCheckout>

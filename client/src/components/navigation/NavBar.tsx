@@ -1,12 +1,10 @@
-import React, { useState, useContext } from "react";
-import { Menu, MenuItemProps } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 import { AuthContext } from "../../context/auth";
 import AuthenticatedNavBar from "./AuthenticatedNavBar";
 import UnAuthenticatedNavBar from "./UnAuthenticatedNavBar";
 
 export default function NavBar() {
-	const { user, logout } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 
 	const renderNavBar = user ? (
 		<AuthenticatedNavBar />
