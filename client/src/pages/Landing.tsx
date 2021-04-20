@@ -1,86 +1,139 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import {
+	Button,
+	Container,
+	Divider,
+	Grid,
+	Header,
+	Message,
+	Segment,
+} from "semantic-ui-react";
 import { tw } from "../TailwindClasses/Buttons";
 
 const Landing = () => {
 	return (
-		<section className="relative">
-			{/* Illustration behind hero content */}
-			<div
-				className="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none"
-				aria-hidden="true"
-			>
-				<svg
-					width="1360"
-					height="578"
-					viewBox="-50 -50 1360 578"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<defs>
-						<linearGradient
-							x1="50%"
-							y1="0%"
-							x2="50%"
-							y2="100%"
-							id="illustration-01"
-						>
-							<stop stopColor="#FFF" offset="0%" />
-							<stop stopColor="#EA2AEA" offset="77.402%" />
-							<stop stopColor="#DFDFDF" offset="100%" />
-						</linearGradient>
-					</defs>
-					<g fill="url(#illustration-01)" fillRule="evenodd">
-						<circle cx="1202" cy="228" r="64" />
-						<circle cx="30" cy="443" r="64" />
-					</g>
-				</svg>
-			</div>
-
-			<div className="max-w-6xl mx-auto px-4 sm:px-6">
-				<div className="pt-32 pb-12 md:pt-40 md:pb-20">
-					<div className="text-center pb-12 md:pb-16">
-						<h1
-							className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4"
+		<Container>
+			<Message>
+				<p>
+					Altough every email's from address will be tamasbelinszky@gmail.com,
+					feel free to test out all the features.
+				</p>
+				<p>
+					You can get credits if you use one of{" "}
+					<a href="https://stripe.com/docs/testing" target="_blank">
+						Stripe's test card number
+					</a>
+				</p>
+			</Message>
+			<div className="pt-32 pb-12 md:pt-20 md:pb-20">
+				<div className="text-center pb-6 md:pb-4">
+					<h1
+						className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4"
+						data-aos="zoom-y-out"
+					>
+						Project {""}
+						<span className="bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-green-200">
+							emailmar
+						</span>
+					</h1>
+					<div className="max-w-3xl mx-auto">
+						<p
+							className="text-xl text-gray-600 mb-8"
 							data-aos="zoom-y-out"
+							data-aos-delay="150"
 						>
-							Project {""}
-							<span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-200">
-								emailmar
-							</span>
-						</h1>
-						<div className="max-w-3xl mx-auto">
-							<p
-								className="text-xl text-gray-600 mb-8"
-								data-aos="zoom-y-out"
-								data-aos-delay="150"
-							>
-								Easiest way to send micro-surveys to your team. Name your email,
-								give a subject, ask a question, and provide a list of emails. We
-								will take it from there.
-							</p>
-							<div
-								className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
-								data-aos="zoom-y-out"
-								data-aos-delay="300"
-							>
-								<div>
-									<a className={tw.button.white} href="/auth/google">
-										Start free trial
-									</a>
-								</div>
-								<div>
-									<a
-										className={tw.button.white}
-										href="https://github.com/TimarTimar/ts-emailmar"
-									>
-										Learn more
-									</a>
-								</div>
+							This app uses the sendgrid API to send emails. Currently there is
+							only one email template which allows recipients to respond to a
+							yes/no question. The app tracks the campaign results via
+							sendgrid's event webhook.
+						</p>
+						<div
+							className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
+							data-aos="zoom-y-out"
+							data-aos-delay="300"
+						>
+							<div>
+								<Link to="/login">Start free trial</Link>
+							</div>
+							<div>
+								<a
+									className={tw.button.white}
+									href="https://github.com/TimarTimar/ts-emailmar"
+								>
+									Learn more
+								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+
+			<Segment style={{ padding: "0em" }} vertical>
+				<Grid celled="internally" columns="equal" stackable>
+					<Grid.Row textAlign="center">
+						<Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+							<Header as="h3" style={{ fontSize: "2em" }}>
+								Project's Goal
+							</Header>
+							<p style={{ fontSize: "1.33em" }}>
+								To learn NodeJS+React full-stack web development.
+							</p>
+						</Grid.Column>
+						<Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
+							<Header as="h3" style={{ fontSize: "2em" }}>
+								Project's Code
+							</Header>
+							<p style={{ fontSize: "1.33em" }}>
+								{/*<Image avatar src='/images/avatar/large/nan.jpg' />*/}
+								<a href="https://github.com/TimarTimar/graphql-typescript-emailmar">
+									https://github.com/TimarTimar/graphql-typescript-emailmar
+								</a>
+							</p>
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
+			</Segment>
+
+			<Segment style={{ padding: "8em 0em" }} vertical>
+				<Container text>
+					<Header as="h3" style={{ fontSize: "2em" }}>
+						Read more about my learning journey
+					</Header>
+					<p style={{ fontSize: "1.33em" }}>
+						Instead of focusing on content creation and hard work, we have
+						learned how to master the art of doing nothing by providing massive
+						amounts of whitespace and generic content that can seem massive,
+						monolithic and worth your attention.
+					</p>
+					<Button as="a" size="large">
+						Read More
+					</Button>
+
+					<Divider
+						as="h4"
+						className="header"
+						horizontal
+						style={{ margin: "3em 0em", textTransform: "uppercase" }}
+					>
+						<a href="#">Case Studies</a>
+					</Divider>
+
+					<Header as="h3" style={{ fontSize: "2em" }}>
+						Did We Tell You About Our Bananas?
+					</Header>
+					<p style={{ fontSize: "1.33em" }}>
+						Yes I know you probably disregarded the earlier boasts as
+						non-sequitur filler content, but it's really true. It took years of
+						gene splicing and combinatory DNA research, but our bananas can
+						really dance.
+					</p>
+					<Button as="a" size="large">
+						I'm Still Quite Interested
+					</Button>
+				</Container>
+			</Segment>
+		</Container>
 	);
 };
 
