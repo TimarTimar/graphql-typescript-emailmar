@@ -47,11 +47,11 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 							);
 						})}
 						<div className="flex justify-between items-center h-14 my-2.5">
-							<Button onClick={props.onCancel} name="cancelButton">
+							<Button color="red" onClick={props.onCancel} name="cancelButton">
 								Cancel
 							</Button>
 							{props.showSaveAsDraftButton && props.children}
-							<Button type="submit" name="sendButton">
+							<Button color="teal" type="submit" name="sendButton">
 								Submit
 							</Button>
 						</div>

@@ -11,14 +11,7 @@ import {
 	FETCH_SURVEYSBYUSER_QUERY,
 	DELETE_SURVEY_MUTATION,
 } from "../util/graphql";
-import {
-	Button,
-	Container,
-	Divider,
-	Dropdown,
-	DropdownProps,
-	Input,
-} from "semantic-ui-react";
+import { Button, Container, Divider, Dropdown } from "semantic-ui-react";
 
 //import { tw } from "../../TailwindClasses/Buttons";
 

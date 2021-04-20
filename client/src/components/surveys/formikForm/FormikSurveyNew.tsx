@@ -8,7 +8,7 @@ import {
 	CREATE_SURVEY_AND_SEND_MUTATUION,
 	CREATE_SURVEY_MUTATUION,
 } from "../../../util/graphql";
-import { Button } from "semantic-ui-react";
+import { Button, Divider } from "semantic-ui-react";
 
 export const FormikSurveyNew = () => {
 	const [showFormReview, setShowFormReview] = useState(false);
@@ -36,16 +36,21 @@ export const FormikSurveyNew = () => {
 						{SurveyFormFieldsList.map((item) => {
 							return (
 								<div key={item} className="p-2 text-gray-500">
-									<label>{`Email's ${item}: `}</label>
+									<h4>
+										<b>{`Email's ${item}: `}</b>
+									</h4>
 									<div>{formikFormValues[item]}</div>
-									<hr />
+									<Divider />
 								</div>
 							);
 						})}
 					</div>
 					<div className="flex justify-between my-3.5">
-						<Button onClick={() => setShowFormReview(false)}>Cancel</Button>
+						<Button color="red" onClick={() => setShowFormReview(false)}>
+							Cancel
+						</Button>
 						<Button
+							color="orange"
 							onClick={async (e) => {
 								e.preventDefault();
 								await createSurveyAsDraft();
@@ -55,6 +60,7 @@ export const FormikSurveyNew = () => {
 							SAVEASDRAFT
 						</Button>
 						<Button
+							color="teal"
 							onClick={async (e) => {
 								e.preventDefault();
 								e.stopPropagation();
