@@ -3,6 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { FormikSurveyFormValues, SurveyFormFieldsList } from "./types";
 import { SurveyFormSchema } from "./SurveyFormValidation";
 import { tw } from "../../../TailwindClasses/Buttons";
+import { Button } from "semantic-ui-react";
 
 interface FormikFormSurveyProps {
 	handleSubmit: any;
@@ -46,21 +47,13 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 							);
 						})}
 						<div className="flex justify-between items-center h-14 my-2.5">
-							<button
-								className={tw.button.white}
-								onClick={props.onCancel}
-								name="cancelButton"
-							>
+							<Button onClick={props.onCancel} name="cancelButton">
 								Cancel
-							</button>
+							</Button>
 							{props.showSaveAsDraftButton && props.children}
-							<button
-								className={tw.button.white}
-								type="submit"
-								name="sendButton"
-							>
+							<Button type="submit" name="sendButton">
 								Submit
-							</button>
+							</Button>
 						</div>
 					</Form>
 				)}

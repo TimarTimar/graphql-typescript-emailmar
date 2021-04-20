@@ -11,6 +11,7 @@ import {
 	SAVE_AS_DRAFT_SURVEY_MUTUTATION,
 } from "../../../util/graphql";
 import { FormikSurveyFormValues } from "./types";
+import { Button } from "semantic-ui-react";
 
 export const FormikSurveyListItemEdit = () => {
 	const [formikFormValues, setFormikFormValues] = useState({
@@ -87,13 +88,9 @@ export const FormikSurveyListItemEdit = () => {
 			window.location.assign("/surveys");
 		};
 		return (
-			<button
-				className={tw.button.white}
-				onClick={() => wrapSaveAsDraftSurvey()}
-				type="submit"
-			>
+			<Button onClick={() => wrapSaveAsDraftSurvey()} type="submit">
 				Save As Draft
-			</button>
+			</Button>
 		);
 	};
 

@@ -1,5 +1,6 @@
 import React, { CSSProperties, MouseEventHandler, ReactNode } from "react";
 import ReactDom from "react-dom";
+import { Button } from "semantic-ui-react";
 import { tw } from "../TailwindClasses/Buttons";
 
 const MODAL_STYLES: CSSProperties = {
@@ -44,12 +45,8 @@ export default function Modal({
 			<div style={MODAL_STYLES}>
 				<div className="text-center p-4">{children}</div>
 				<div className="flex justify-between my-3.5">
-					<button className={tw.button.white} onClick={onClose}>
-						Cancel
-					</button>
-					<button className={tw.button.white} onClick={handleConfirm}>
-						Confirm
-					</button>
+					<Button onClick={onClose}>Cancel</Button>
+					<Button onClick={handleConfirm}>Confirm</Button>
 				</div>
 			</div>
 		</>,
