@@ -1,15 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-	Button,
-	Container,
-	Grid,
-	Header,
-	Message,
-	Segment,
-} from "semantic-ui-react";
+import { Container, Grid, Header, Message, Segment } from "semantic-ui-react";
 import Timeline from "../components/timeline/Timeline";
-import { tw } from "../TailwindClasses/Buttons";
 
 const Landing = () => {
 	return (
