@@ -22,7 +22,11 @@ const Landing = () => {
 				</p>
 				<p>
 					You can get credits if you use one of{" "}
-					<a href="https://stripe.com/docs/testing" target="_blank">
+					<a
+						href="https://stripe.com/docs/testing"
+						target="_blank"
+						rel="noreferrer"
+					>
 						Stripe's test card number
 					</a>
 				</p>
@@ -61,6 +65,8 @@ const Landing = () => {
 								<a
 									className={tw.button.white}
 									href="https://github.com/TimarTimar/ts-emailmar"
+									target="_blank"
+									rel="noreferrer"
 								>
 									Learn more
 								</a>
@@ -87,7 +93,11 @@ const Landing = () => {
 							</Header>
 							<p style={{ fontSize: "1.33em" }}>
 								{/*<Image avatar src='/images/avatar/large/nan.jpg' />*/}
-								<a href="https://github.com/TimarTimar/graphql-typescript-emailmar">
+								<a
+									href="https://github.com/TimarTimar/graphql-typescript-emailmar"
+									target="_blank"
+									rel="noreferrer"
+								>
 									https://github.com/TimarTimar/graphql-typescript-emailmar
 								</a>
 							</p>
@@ -95,57 +105,7 @@ const Landing = () => {
 					</Grid.Row>
 				</Grid>
 			</Segment>
-
-			<Segment style={{ padding: "8em 0em" }} vertical>
-				<Container text>
-					<Header as="h3" style={{ fontSize: "2em" }}>
-						Read more about my coding journey
-					</Header>
-					<p style={{ fontSize: "1.33em" }}>
-						I studied C++ at my highschool. (FMG -Math&amp;Informatics) I
-						studied VBA, C# and Oracle SQL at my unversity. (BCE-Business
-						Informatics-BSc) I was the inside implementation manager of a 2+
-						years ERP projects where we implemented Odoo 12 enterprise version.
-						Odoo's tech stack is JS on the frontend with it's own framework,
-						Python on the backend with it's own ORM api, and PostgreSQL
-						database. We customized modules, implemented custom modules and
-						integrated 3rd party APIs. Later I joined the IT company who helped
-						us implement Odoo and I dived more into the backend
-						development(~7months). I loved IT overall but I didn't really
-						enjoyed the coding experience. So listening to my friends advice I
-						gave a try to NodeJS+React full-stack web development. And I'm
-						really greatful I did.
-					</p>
-					<Button as="a" size="large">
-						Read More
-					</Button>
-
-					<Divider
-						as="h4"
-						className="header"
-						horizontal
-						style={{ margin: "3em 0em", textTransform: "uppercase" }}
-					>
-						<a href="#">Case Studies</a>
-					</Divider>
-
-					<Header as="h3" style={{ fontSize: "2em" }}>
-						Did We Tell You About Our Bananas?
-					</Header>
-					<p style={{ fontSize: "1.33em" }}>
-						Yes I know you probably disregarded the earlier boasts as
-						non-sequitur filler content, but it's really true. It took years of
-						gene splicing and combinatory DNA research, but our bananas can
-						really dance.
-					</p>
-					<Button as="a" size="large">
-						I'm Still Quite Interested
-					</Button>
-				</Container>
-			</Segment>
-			<div>
-				<Timeline />
-			</div>
+			<Timeline />
 		</Container>
 	);
 };

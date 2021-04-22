@@ -2,7 +2,7 @@ import "./Timeline.css";
 import { ReactComponent as WorkIcon } from "./work.svg";
 import { ReactComponent as SchoolIcon } from "./school.svg";
 
-import TimelineItems from "./TimelineItems";
+import TimelineItems from "./CodeTimelineItems";
 
 import {
 	VerticalTimeline,
@@ -12,23 +12,23 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 
 const Timeline = () => {
-	let workIconStyles = { background: "#06D6A0" };
-	let schoolIconStyles = { background: "#f9c74f" };
+	const workIconStyles = { background: "#06D6A0" };
+	const schoolIconStyles = { background: "#f9c74f" };
 
 	return (
 		<div>
 			<h1 className="title">Timeline</h1>
 			<VerticalTimeline>
 				{TimelineItems.map((element) => {
-					let isWorkIcon = element.icon === "work";
-					let showButton =
+					const isWorkIcon = element.icon === "work";
+					const showButton =
 						element.buttonText !== undefined &&
 						element.buttonText !== null &&
 						element.buttonText !== "";
 
 					return (
 						<VerticalTimelineElement
-							key={element.key}
+							key={element.id}
 							date={element.date}
 							dateClassName="date"
 							iconStyle={isWorkIcon ? workIconStyles : schoolIconStyles}
@@ -46,7 +46,7 @@ const Timeline = () => {
 									className={`button ${
 										isWorkIcon ? "workButton" : "schoolButton"
 									}`}
-									href="/"
+									href={element.buttonHref}
 								>
 									{element.buttonText}
 								</a>

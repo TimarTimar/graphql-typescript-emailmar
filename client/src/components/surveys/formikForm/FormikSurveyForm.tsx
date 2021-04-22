@@ -37,6 +37,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 												? "Comma separated emails"
 												: `Your email's ${item}`
 										}
+										value={values[item]}
 									/>
 									<span>
 										{errors[item] && touched[item] ? (

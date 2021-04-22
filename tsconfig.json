@@ -6,8 +6,9 @@
       "rootDir": "./",
       "outDir": "./dist",
       "esModuleInterop": true,
-      "allowJs": true,
+      "allowJs": false,
       "strict": true,
       "noImplicitAny": true
-    }
+    },
+    "exclude": ["client", "node_modules", "dist"]
   }
