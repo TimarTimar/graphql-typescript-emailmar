@@ -47,6 +47,8 @@ const Timeline = () => {
 										isWorkIcon ? "workButton" : "schoolButton"
 									}`}
 									href={element.buttonHref}
+									target="_blank"
+									rel="noreferrer"
 								>
 									{element.buttonText}
 								</a>

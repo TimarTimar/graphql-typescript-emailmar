@@ -1,34 +1,34 @@
 const timelineItems = [
 	{
-		id: 2,
+		id: 1,
 		title: "Learning GraphQL with Apollo",
 		location: "Online, Udemy",
 		description:
 			"I went through on a tutorial project and I converted that back to my project. Apollo Server's caching mechanism really improved the app's performance. (~100hr)",
-		buttonText: "graphql-typescript-emailmar repo",
+		buttonText: "Repo: graphql-typescript-emailmar",
 		buttonHref: "https://github.com/TimarTimar/graphql-typescript-emailmar",
-		date: "2020 October - 2020 December",
+		date: "2021 Apr - Present",
 		icon: "work",
 	},
 	{
-		id: 3,
+		id: 2,
 		title: "Learning Typescript",
 		location: "Online, Udemy",
 		description:
 			"I read the offical TS handbook. I migrated my NodeJS + React project from JS to TS. I replaced Redux Form with Formik. Learning Typescript helped me a lot because I had to go through on everything I learned in the last project. (~100hr)",
-		buttonText: "ts-emailmar repo",
+		buttonText: "Repo: ts-emailmar",
 		buttonHref: "https://github.com/TimarTimar/ts-emailmar",
 		date: "2021 Feb - 2021 Apr",
 		icon: "work",
 	},
 	{
-		id: 4,
+		id: 3,
 		title: "Extending the NodeJS+React Udemy course's project",
 		location: "Online, Udemy",
 		description:
 			"I extended the project with my own features both on the Backend and Frontend. I also converted all class based components into function components. Everything after 'complete base funcionality' commit c41f2e848bb5345b9055f63131180c4ea5596741.  (~100hr)",
-		buttonText: "emailmar repo",
-		buttonHref: "",
+		buttonText: "Repo: emailmar",
+		buttonHref: "https://github.com/TimarTimar/emailmar",
 		date: "2021 Feb - 2021 Mar",
 		icon: "work",
 	},
@@ -38,7 +38,7 @@ const timelineItems = [
 		location: "Online, Udemy",
 		description:
 			"I completed the Node with React: Fullstack Web Development course. (~100hr)",
-		buttonText: "Check Course's content",
+		buttonText: "Course content",
 		buttonHref:
 			"https://www.udemy.com/course/node-with-react-fullstack-web-development/",
 		date: "2021 Feb",
@@ -50,7 +50,7 @@ const timelineItems = [
 		location: "Online, Udemy",
 		description:
 			"I completed the Modern React with Redux [2020 Update] course. (~100hr)",
-		buttonText: "Check Course's content",
+		buttonText: "Course content",
 		buttonHref: "https://www.udemy.com/course/react-redux/",
 		date: "2021 Jan",
 		icon: "school",

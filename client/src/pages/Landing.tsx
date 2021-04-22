@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
 	Button,
 	Container,
-	Divider,
 	Grid,
 	Header,
 	Message,
@@ -15,7 +14,7 @@ import { tw } from "../TailwindClasses/Buttons";
 const Landing = () => {
 	return (
 		<Container>
-			<Message>
+			<Message color="teal">
 				<p>
 					Altough every email's from address will be tamasbelinszky@gmail.com,
 					feel free to test out all the features.
@@ -53,25 +52,6 @@ const Landing = () => {
 							yes/no question. The app tracks the campaign results via
 							sendgrid's event webhook.
 						</p>
-						<div
-							className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"
-							data-aos="zoom-y-out"
-							data-aos-delay="300"
-						>
-							<div>
-								<Link to="/login">Start free trial</Link>
-							</div>
-							<div>
-								<a
-									className={tw.button.white}
-									href="https://github.com/TimarTimar/ts-emailmar"
-									target="_blank"
-									rel="noreferrer"
-								>
-									Learn more
-								</a>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
