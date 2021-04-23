@@ -29,7 +29,6 @@ if (localStorage.getItem("jwtToken")) {
 	const decodedToken: decodedTokenInterface = jwtDecode(
 		localStorage.getItem("jwtToken")!
 	);
-	console.log("decoded", decodedToken);
 	if (decodedToken.exp * 1000 < Date.now()) {
 		localStorage.removeItem("jwtToken");
 	} else {
